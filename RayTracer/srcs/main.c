@@ -15,11 +15,6 @@ int	main(int ac, char **av)
 	init_scene(&scene);
 	if (!(convert_file(av[1], &scene)))
 		exception(NULL, NULL, 1);
-	while (scene.object) {
-		print_object(scene.object);
-//		printf("%d\n", scene.object->ident);
-		scene.object = scene.object->next;
-	}
 	if (!scene.camera.object.ident)
 		exception(NO_VAL, "Camera", 1);
 	if (!init_mlx(&scene))

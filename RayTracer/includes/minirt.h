@@ -90,6 +90,7 @@ int		init_mlx(t_scene *scene);
  * PARSER
  */
 int		convert_file(const char *filename, t_scene *scene);
+
 int		get_object(const char *line, t_scene *scene);
 int		get_tuple(const char *line, t_tuple *tuple, int *i, double type);
 int		get_digit(const char *line, double *container, int *i, int n);

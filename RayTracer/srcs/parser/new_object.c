@@ -8,7 +8,6 @@ int	add_object(t_object **object, t_object *new)
 {
 	t_object	*ptr;
 
-//	(*new)->ident = sp;
 	new->next = NULL;
 	if (!*object)
 		*object = new;
