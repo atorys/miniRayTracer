@@ -9,6 +9,10 @@
 # include "maths.h"
 # include <stdlib.h>
 
+/*
+ * multiplying a translation matrix by a VECTOR
+ * doesn't change the vector due to W = 0
+ */
 # define VECTOR	0
 # define POINT	1
 # define COLOR	3.3

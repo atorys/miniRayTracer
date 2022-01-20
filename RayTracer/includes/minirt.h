@@ -9,15 +9,14 @@
 # include <stdlib.h>
 # include "../libft/includes/libft.h"
 # include "tuple.h"
+# include "matrix.h"
 # include "objects.h"
 
-//OS_NAME	= $(shell uname -s | tr A-Z a-z)
-//if	($(OS_NAME), linux)
-# include "../mlx/mlx_linux/mlx.h"
-//else
-//# include "mlx.h"
-
-//
+# ifdef	LINUX
+#	include "../mlx/mlx_linux/mlx.h"
+# else
+#	include "mlx.h"
+# endif
 
 # define WIN_HEIGHT	600
 # define WIN_WIDTH	800

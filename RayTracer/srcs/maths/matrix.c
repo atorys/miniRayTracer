@@ -7,7 +7,8 @@
 t_matrix*	new_matrix(int size)
 {
 	t_matrix*	new;
-	int 		i;
+	int			i;
+	int			j;
 
 	new = malloc(sizeof(t_matrix));
 	if (!new)
@@ -20,7 +21,50 @@ t_matrix*	new_matrix(int size)
 		new->a[i] = (double *)malloc(sizeof(double) * size);
 		if (!new->a[i])
 			return (NULL);
+		j = -1;
+		while (++j < size)
+			new->a[i][j] = 0;
 	}
+	return (new);
+}
+
+t_matrix*	new_identity_matrix(int size)
+{
+	t_matrix*	new;
+	int 		i;
+
+	new = new_matrix(size);
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i < size)
+		new->a[i][i] = 1;
+	return (new);
+}
+
+t_matrix*	new_translation_matrix(double x, double y, double z)
+{
+	t_matrix*	new;
+
+	new = new_identity_matrix(4);
+	if (!new)
+		return (NULL);
+	new->a[0][3] = x;
+	new->a[1][3] = y;
+	new->a[2][3] = z;
+	return (new);
+}
+
+t_matrix*	new_scaling_matrix(double x, double y, double z)
+{
+	t_matrix*	new;
+
+	new = new_identity_matrix(4);
+	if (!new)
+		return (NULL);
+	new->a[0][0] = x;
+	new->a[1][1] = y;
+	new->a[2][2] = z;
 	return (new);
 }
 
@@ -41,12 +85,13 @@ t_matrix*	submatrix(t_matrix *matrix, int i, int j)
 	{
 		skip_j = 0;
 		m = -1;
-		while (++m < new->size) {
+		while (++m < new->size)
+		{
 			if (n == i)
 				skip_i = 1;
 			if (m == j)
 				skip_j = 1;
-			new->a[i][j] = matrix->a[n + skip_i][m + skip_j];
+			new->a[n][m] = matrix->a[n + skip_i][m + skip_j];
 		}
 	}
 	return (new);
@@ -121,6 +166,8 @@ t_tuple*	multiply_matrix_tuple(t_matrix *matrix, t_tuple* tuple)
 	double		array[4];
 	int 		i;
 
+	if (matrix->size != 4)
+		return (NULL);
 	result = new_tuple(0, 0, 0, 0);
 	if (!result)
 		return (NULL);
@@ -136,7 +183,6 @@ t_tuple*	multiply_matrix_tuple(t_matrix *matrix, t_tuple* tuple)
 	result->w = array[3];
 	return (result);
 }
-#include "stdio.h"
 
 void	transpose(t_matrix **matrix)
 {
@@ -159,21 +205,57 @@ void	transpose(t_matrix **matrix)
 	}
 }
 
-double 		determinant(t_matrix *matrix, int depth)
+double 		determinant(t_matrix *matrix)
 {
-	if (depth == 2)
+	double	det;
+	int		j;
+
+	if (matrix->size == 2)
 		return ((matrix->a[0][0] * matrix->a[1][1]) -
 				(matrix->a[0][1] * matrix->a[1][0]));
-//	if (depth == 2)
-//		return ((matrix->a[0 + i_sub][0 + j_sub] * matrix->a[1 + i_sub][1 + j_sub]) -
-//				(matrix->a[0 + i_sub][1 + j_sub] * matrix->a[1 + i_sub][0 + j_sub]));
-//	else if (depth == 3)
-//		return (((matrix->a[0][0] * matrix->a[1][1] * matrix->a[2][2]) +
-//				(matrix->a[0][1] * matrix->a[1][2] * matrix->a[2][0]) +
-//				(matrix->a[0][2] * matrix->a[1][0] * matrix->a[2][1]))
-//				-
-//				((matrix->a[0][2] * matrix->a[1][2]* matrix->a[2][0])))
+	else
+	{
+		det = 0;
+		j = -1;
+		while (++j < matrix->size)
+			det += matrix->a[0][j] * minor(matrix, 0, j) * ft_pow(-1, 0 + j);
+	}
+	return (det);
+}
 
-//	return (matrix->a[0][0] * determinant(matrix, 2, 1, 1) +
-//			matrix->a[1][0] * determinant(matrix, 2, 1, 1) +);
+double 		minor(t_matrix *matrix, int i, int j)
+{
+	double		det;
+	t_matrix	*sub;
+
+	sub = submatrix(matrix, i, j);
+	if (!sub) // todo: error up? exit?
+		return (0);
+	det = determinant(sub);
+	free_matrix(sub);
+	return (det);
+}
+
+t_matrix*	inverse(t_matrix *matrix)
+{
+	t_matrix	*new;
+	double 		det;
+	int			i;
+	int			j;
+
+	det = determinant(matrix);
+	if (det == 0)
+		return (NULL);
+	new = new_matrix(matrix->size);
+	if (!new)
+		return (NULL);
+	i = -1;
+	while (++i < new->size)
+	{
+		j = -1;
+		while (++j < new->size)
+			new->a[i][j] = minor(matrix, i, j) * ft_pow(-1, i + j) / det;
+	}
+	transpose(&new);
+	return (new);
 }

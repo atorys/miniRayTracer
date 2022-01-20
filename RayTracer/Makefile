@@ -66,6 +66,7 @@ ifeq	($(OS_NAME), linux)
 			LINK_MLX_FLAGS	= -Lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 			MLX_PATH		= ./mlx/mlx_linux/
 			MLX_LIBRARY		= mlx/mlx_linux/libmlx_Linux.a
+			FLAGS			+= -D LINUX=1
 else
 			OBJ_MLX_FLAGS	= -Imlx
 			LINK_MLX_FLAGS	= -Lmlx -lmlx -framework OpenGL -framework AppKit
@@ -73,7 +74,8 @@ else
 			MLX_LIBRARY		= mlx/mlx_mac/libmlx.a
 endif
 
-#FLAGS		= -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror
+#FLAGS		= -Wall
 
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
