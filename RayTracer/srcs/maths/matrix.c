@@ -4,6 +4,9 @@
 
 #include "matrix.h"
 
+/*
+ * zeroed square matrix size x size
+ */
 t_matrix*	new_matrix(int size)
 {
 	t_matrix*	new;
@@ -28,6 +31,12 @@ t_matrix*	new_matrix(int size)
 	return (new);
 }
 
+/*
+ * square matrix like
+ *  | 1 0 0 |
+ *  | 0 1 0 |
+ *  | 0 0 1 |
+ */
 t_matrix*	new_identity_matrix(int size)
 {
 	t_matrix*	new;
@@ -42,6 +51,13 @@ t_matrix*	new_identity_matrix(int size)
 	return (new);
 }
 
+/*
+ * matrix used for POINT translation
+ *  | 1 0 0 x |
+ *  | 0 1 0 y |
+ *  | 0 0 1 z |
+ *  | 0 0 0 1 |
+ */
 t_matrix*	new_translation_matrix(double x, double y, double z)
 {
 	t_matrix*	new;
@@ -55,6 +71,13 @@ t_matrix*	new_translation_matrix(double x, double y, double z)
 	return (new);
 }
 
+/*
+ * matrix used for POINT and VECTOR scaling
+ *  | x 0 0 0 |
+ *  | 0 y 0 0 |
+ *  | 0 0 z 0 |
+ *  | 0 0 0 1 |
+ */
 t_matrix*	new_scaling_matrix(double x, double y, double z)
 {
 	t_matrix*	new;
@@ -65,6 +88,41 @@ t_matrix*	new_scaling_matrix(double x, double y, double z)
 	new->a[0][0] = x;
 	new->a[1][1] = y;
 	new->a[2][2] = z;
+	return (new);
+}
+
+
+t_matrix*	new_rotation_matrix(double x_axis, double y_axis, double z_axis)
+{
+	t_matrix*	new;
+
+	new = new_identity_matrix(4);
+	if (!new)
+		return (NULL);
+	if (x_axis)
+	{
+		x_axis = radians(x_axis);
+		new->a[1][1] = cos(x_axis);
+		new->a[1][2] = -sin(x_axis);
+		new->a[2][1] = sin(x_axis);
+		new->a[2][2] = cos(x_axis);
+	}
+	if (y_axis)
+	{
+		y_axis = radians(y_axis);
+		new->a[0][0] = cos(y_axis);
+		new->a[0][2] = sin(y_axis);
+		new->a[2][0] = -sin(y_axis);
+		new->a[2][2] = cos(y_axis);
+	}
+	if (z_axis)
+	{
+		z_axis = radians(z_axis);
+		new->a[0][0] = cos(z_axis);
+		new->a[0][1] = -sin(z_axis);
+		new->a[1][0] = sin(z_axis);
+		new->a[1][1] = cos(z_axis);
+	}
 	return (new);
 }
 
@@ -160,27 +218,31 @@ t_matrix*	multiply_matrix(t_matrix *matrix1, t_matrix *matrix2)
 	return (result);
 }
 
-t_tuple*	multiply_matrix_tuple(t_matrix *matrix, t_tuple* tuple)
+t_tuple	multiply_matrix_tuple(t_matrix *matrix, t_tuple* tuple)
 {
-	t_tuple*	result;
-	double		array[4];
-	int 		i;
+	t_tuple	result;
+	double	array[4];
+	int 	i;
 
-	if (matrix->size != 4)
-		return (NULL);
+//	if (matrix->size != 4)
+//		return (NULL);
 	result = new_tuple(0, 0, 0, 0);
-	if (!result)
-		return (NULL);
+//	if (!result)
+//		return (NULL);
 	i = -1;
 	while (++i < matrix->size)
 	{
 		array[i] = (matrix->a[i][0] * tuple->x) + (matrix->a[i][1] * tuple->y) +
 					(matrix->a[i][2] * tuple->z) + (matrix->a[i][3] * tuple->w);
 	}
-	result->x = array[0];
-	result->y = array[1];
-	result->z = array[2];
-	result->w = array[3];
+	result.x = array[0];
+	result.y = array[1];
+	result.z = array[2];
+	result.w = array[3];
+//	result->x = array[0];
+//	result->y = array[1];
+//	result->z = array[2];
+//	result->w = array[3];
 	return (result);
 }
 

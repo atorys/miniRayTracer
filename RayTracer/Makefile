@@ -8,8 +8,8 @@ VPATH			=	./srcs/				\
 					./mlx/mlx_linux/	\
 					./libft/includes/	\
 					./srcs/maths/		\
-					./srcs/parser/
-#					./srcs/render/\
+					./srcs/parser/		\
+					./srcs/render/
 
 
 #:::: FILES ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -21,16 +21,17 @@ SRCS_NAME		=	main.c		\
 GNL_SRCS		=	get_next_line.c		\
                  	get_next_line_utils.c
 
-MATH_SRCS		=	collations.c		\
-					ft_pow.c			\
-					ft_quadratic_roots.c\
-					tuple.c				\
+MATH_SRCS		=	collations.c			\
+					ft_degrees_to_radians.c \
+					ft_pow.c				\
+					ft_quadratic_roots.c	\
+					tuple.c					\
 					matrix.c
-#
-#RENDER_SRCS		=	render_new_image.c	\
-#                    intersections.c		\
-#                    color_operations.c
-#
+
+RENDER_SRCS		=	new_image.c			\
+					ray.c				\
+                    intersections.c
+
 PARSER_SRCS		=	converter_file.c	\
 					new_camera.c	\
 					new_ambient.c	\
@@ -45,18 +46,22 @@ LIBFT_PATH		=	./libft/
 SRCS_PATH		=	./srcs/
 GNL_PATH		=	./srcs/get_nextline/
 MATH_PATH		=	./srcs/maths/
-#RENDER_PATH		=	./srcs/render/
+RENDER_PATH		=	./srcs/render/
 PARSER_PATH		=	./srcs/parser/
 OBJS_DIR		=	./objs/
 
 
-OBJS_NAME		=	$(SRCS_NAME:.c=.o) $(GNL_SRCS:.c=.o) $(MATH_SRCS:.c=.o) $(PARSER_SRCS:.c=.o) #$(RENDER_SRCS:.c=.o)
+OBJS_NAME		=	$(SRCS_NAME:.c=.o)	\
+					$(GNL_SRCS:.c=.o)	\
+					$(MATH_SRCS:.c=.o)	\
+					$(PARSER_SRCS:.c=.o)\
+					$(RENDER_SRCS:.c=.o)
 
 SRCS			=	$(addprefix $(SRCS_PATH), $(SRCS_NAME)) 	\
 					$(addprefix $(GNL_PATH), $(GNL_SRCS))		\
 					$(addprefix $(MATH_PATH), $(MATH_SRCS))		\
-					$(addprefix $(PARSER_PATH), $(PARSER_SRCS))
-#					$(addprefix $(RENDER_PATH), $(RENDER_SRCS))
+					$(addprefix $(PARSER_PATH), $(PARSER_SRCS))	\
+					$(addprefix $(RENDER_PATH), $(RENDER_SRCS))
 
 OBJS			=	$(addprefix $(OBJS_DIR), $(OBJS_NAME))
 

@@ -20,7 +20,7 @@ void	print_sphere(void * this_ptr) {
 
 	t_sphere *sphere = (t_sphere *)this_ptr;
 	printf("diameter = %f\n", sphere->diameter);
-	printf("color = %f, %f, %f\n\n", sphere->color.x, sphere->color.y, sphere->color.z);
+	printf("color = %f, %f, %f\n\n", sphere->object.color.x, sphere->object.color.y, sphere->object.color.z);
 }
 
 void	print_plane(void * this_ptr) {
@@ -29,7 +29,7 @@ void	print_plane(void * this_ptr) {
 
 	t_plane *plane = (t_plane *)this_ptr;
 	printf("orientation = %f, %f, %f\n", plane->orientation.x, plane->orientation.y, plane->orientation.z);
-	printf("color = %f, %f, %f\n\n", plane->color.x, plane->color.y, plane->color.z);
+	printf("color = %f, %f, %f\n\n", plane->object.color.x, plane->object.color.y, plane->object.color.z);
 }
 
 void	print_cylinder(void * this_ptr) {
@@ -40,7 +40,7 @@ void	print_cylinder(void * this_ptr) {
 	printf("orientation = %f, %f, %f\n", cylinder->orientation.x, cylinder->orientation.y, cylinder->orientation.z);
 	printf("diameter = %f\n", cylinder->diameter);
 	printf("diameter = %f\n", cylinder->height);
-	printf("color = %f, %f, %f\n\n", cylinder->color.x, cylinder->color.y, cylinder->color.z);
+	printf("color = %f, %f, %f\n\n", cylinder->object.color.x, cylinder->object.color.y, cylinder->object.color.z);
 }
 
 void	print_camera(void * this_ptr) {

@@ -37,7 +37,7 @@ void	new_light(t_light **l_light, const char *line)
 	|| new->bright < 0 || new->bright > 1)
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_tuple(line, &(new->color), &i, COLOR))
+	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
 	if (!ft_isempty(&(line[i])))

@@ -31,19 +31,19 @@ struct	s_base_tuple
 	double	w;
 };
 
-t_tuple*	new_tuple(double x, double y, double z, double type);
+t_tuple		new_tuple(double x, double y, double z, double type);
 
 bool		compare_tuples(const t_tuple *tuple1, const t_tuple *tuple2);
 
-double 		module_v(const t_vector* vector);
-void		normalize(t_vector **vector);
+double		module_v(const t_vector* vector);
+void		normalize(t_vector *vector);
 
 double		dot(const t_tuple *tuple1, const t_tuple *tuple2);
-t_tuple*	add(const t_tuple *tuple1, const t_tuple *tuple2);
-t_tuple*	subtract(const t_tuple *tuple1, const t_tuple *tuple2);
-void		scale(t_tuple **tuple, double scalar);
-t_tuple*	multiply_on_scalar(const t_tuple *tuple, double scalar);
+t_tuple		add(const t_tuple *tuple1, const t_tuple *tuple2);
+t_tuple		subtract(const t_tuple *tuple1, const t_tuple *tuple2);
+void		scale(t_tuple *tuple, double scalar);
+t_tuple		multiply_on_scalar(const t_tuple *tuple, double scalar);
 
-t_vector	*cross(const t_vector* vector1, const t_vector* vector2);
+t_vector	cross(const t_vector* vector1, const t_vector* vector2);
 
 #endif

@@ -3,6 +3,7 @@
 
 # define MAX_DOUBLE	9223372036854
 # define EPSILON	0.00001
+# define PI			3.14
 
 #include <stdbool.h>
 
@@ -14,7 +15,7 @@ struct s_pair
 	double	y;
 };
 
-
+double 	radians(double degrees);
 double	ft_max_module(double a, double b);
 double	ft_min_module(double a, double b);
 double	ft_max(double a, double b);

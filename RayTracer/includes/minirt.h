@@ -11,6 +11,7 @@
 # include "tuple.h"
 # include "matrix.h"
 # include "objects.h"
+# include "ray.h"
 
 # ifdef	LINUX
 #	include "../mlx/mlx_linux/mlx.h"
@@ -25,7 +26,7 @@
 
 typedef struct s_scene_attributes	t_scene;
 typedef struct s_image				t_image;
-//typedef struct s_view		t_view;
+typedef struct s_view				t_view;
 
 struct s_image
 {
@@ -40,6 +41,25 @@ struct s_image
 	int		w;
 };
 
+struct s_view
+{
+	double		width;
+	double		height;
+
+	double		x_change;
+	double		y_change;
+
+	double 		rotation_angle;
+
+	t_matrix*	rotation;
+	t_matrix*	no_rotation;
+
+//	t_vector	*camera_right;
+//	t_vector	*camera_up;
+//	t_vector	*camera_dir;
+//	t_vector	*camera_pos;
+};
+
 struct s_scene_attributes
 {
 	void		*mlx;
@@ -49,7 +69,7 @@ struct s_scene_attributes
 	int			height;
 
 	t_image		canvas;
-//	t_view		view;
+	t_view		view;
 
 	t_ambient	a_light;
 	t_camera	camera;
@@ -104,5 +124,21 @@ void    new_cylinder(t_object **object, const char *line);
 int		check_digit(char *digit);
 int		ft_next_whitespace(const char *str, int i);
 void	ft_skip_whitespace(const char *str, int *i);
+
+
+/*
+ * RENDER
+ */
+int			new_image(t_scene *scene);
+int			ft_convert_rgb_int(t_color color);
+
+
+t_vector	normal_at(t_object *object, t_point *point);
+
+
+//void	ft_rotate_v(t_view *view, t_vector **v);
+//t_color	intersect_sp(t_data *rt, t_vector *ray, double *distance);
+//double	light_intensity(t_data *rt, t_vector *ray, t_vector *normal);
+//t_color light_intensity(t_data *rt, t_vector *ray, t_vector *normal);
 
 #endif

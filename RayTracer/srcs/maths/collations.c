@@ -1,5 +1,11 @@
 #include "maths.h"
 
+
+bool	ft_equal(double a, double b)
+{
+	return (ft_module(a - b) < EPSILON);
+}
+
 double	ft_max_module(double a, double b)
 {
 	if (a * (double)(1 - (2 * (a < 0))) > b * (double)(1 - (2 * (b < 0))))

@@ -5,13 +5,16 @@
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
+#include "tuple.h"
+
 typedef struct s_object_base_interface	t_object;
 typedef	void (*t_print_func)(void *);
-typedef	void (*t_intersection_func)(void *);
+typedef t_pair (*t_intersection_func)(void *, void *);
 
 struct	s_object_base_interface {
 	int					ident;
 	t_point				center;
+	t_color				color;
 
 	t_print_func 		print_func;
 	t_intersection_func	intersection_func;
@@ -76,9 +79,7 @@ struct	s_camera
 struct	s_light
 {
 	t_object	object;
-
 	double		bright;
-	t_color		color;
 };
 
 /*
@@ -90,9 +91,7 @@ struct	s_light
 struct s_sphere
 {
 	t_object	object;
-
 	double		diameter;
-	t_color		color;
 };
 
 /*
@@ -104,9 +103,7 @@ struct s_sphere
 struct	s_plane
 {
 	t_object	object;
-
 	t_vector	orientation;
-	t_color		color;
 };
 
 /*
@@ -120,11 +117,9 @@ struct	s_plane
 struct	s_cylinder
 {
 	t_object	object;
-
 	t_vector	orientation;
 	double		diameter;
 	double		height;
-	t_color		color;
 };
 void	print_object(t_object*	this);
 

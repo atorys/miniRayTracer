@@ -39,14 +39,14 @@ void	new_sphere(t_object **object, const char *line)
 	if (!get_digit(line, &(new->diameter), &i, 3) || new->diameter < 0)
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_tuple(line, &(new->color), &i, COLOR))
+	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
 	new->object.print_func = print_sphere;
-	new->object.intersection_func = NULL;
+	new->object.intersection_func = intersect_sp;
 }
 
 void    new_plane(t_object **object, const char *line)
@@ -68,7 +68,7 @@ void    new_plane(t_object **object, const char *line)
 	if (module_v(&new->orientation) != 1) // todo : each should be -1;1
 		exception(INVALID_VECTOR, line, 1);
 
-	if (!get_tuple(line, &(new->color), &i, COLOR))
+	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
 	if (!ft_isempty(&(line[i])))
@@ -102,7 +102,7 @@ void	new_cylinder(t_object **object, const char *line)
 	if (!get_digit(line, &(new->height), &i, 3) || new->height < 0)
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_tuple(line, &(new->color), &i, COLOR))
+	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
 	if (!ft_isempty(&(line[i])))
