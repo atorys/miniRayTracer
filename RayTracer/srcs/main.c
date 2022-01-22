@@ -9,7 +9,6 @@
 int	key_hook(int keycode, t_scene *scene)
 {
 //	printf("%d\n", keycode);
-	scene->view.rotation = scene->view.no_rotation;
 	if (keycode == 65307 || keycode == 53)
 		exit(0);
 	if (keycode == 13 || keycode == 119) // W
@@ -20,25 +19,18 @@ int	key_hook(int keycode, t_scene *scene)
 		scene->camera.object.center.z++;
 	if (keycode == 2 || keycode == 100) // D
 		scene->camera.object.center.x -= 0.2;
-//	if (keycode == 123) // left arrow
-//	{
-//		scene->view.rotation = scene->view.rotation_y_left;
-//	}
-//	if (keycode == 124) // right arrow
-//	{
-//		scene->view.rotation = scene->view.rotation_y_right;
-//	}
+	if (keycode == 123) // left arrow
+		scene->view.rotation_z += 10;
+	if (keycode == 124) // right arrow
+		scene->view.rotation_z -= 10;
 	if (keycode == 126) // up arrow
-	{
-		scene->view.rotation_angle += 10;
-		scene->view.rotation = new_rotation_matrix(0, 0, scene->view.rotation_angle);
-	}
+		scene->view.rotation_x += 10;
 	if (keycode == 125) // down arrow
-	{
-		scene->view.rotation_angle -= 10;
-		scene->view.rotation = new_rotation_matrix(0, 0, scene->view.rotation_angle);
-	}
-
+		scene->view.rotation_x -= 10;
+	if (keycode >= 123 && keycode <= 126)
+		scene->view.rotation = new_rotation_matrix(scene->view.rotation_x,
+												   scene->view.rotation_y,
+												   scene->view.rotation_z);
 //	calculate_view_reference(rt); // todo: free vectors
 	new_image(scene);
 }
@@ -55,7 +47,9 @@ int	calculate_view_reference(t_scene *scene)
 	scene->view.x_change = scene->view.width / scene->width;
 	scene->view.y_change = scene->view.height / scene->height;
 
-	scene->view.rotation_angle = 0;
+	scene->view.rotation_x = 0;
+	scene->view.rotation_y = 0;
+	scene->view.rotation_z = 0;
 	scene->view.no_rotation = new_identity_matrix(4);
 	scene->view.rotation = scene->view.no_rotation;
 	if (!scene->view.no_rotation)
@@ -111,12 +105,19 @@ int	main(int ac, char **av)
 //	sphere.object.color = (t_color){255, 0, 0, COLOR};
 //	sphere.object.intersection_func = intersect_sp;
 
-//	t_point point = new_tuple(1, 0, 0, POINT);
-//	t_vector normal = normal_at(&sphere, &point);
-//	printf("%f ", normal.x);
-//	printf("%f ", normal.y);
-//	printf("%f ", normal.z);
-//	printf("%f \n", normal.w);
+//	t_vector normal = new_tuple(0, -1, 0, VECTOR);
+//	t_vector vector = new_tuple(sqrt(2)/2 ,sqrt(2)/2, 0, VECTOR);
+//	t_vector refl = reflect(&vector, &normal);
+//
+//	printf("%f ", refl.x);
+//	printf("%f ", refl.y);
+//	printf("%f \n", refl.z);
+//	printf("%f \n", new.origin->w);
+//	printf("%f ", new.direction->x);
+//	printf("%f ", new.direction->y);
+//	printf("%f ", new.direction->z);
+//	printf("%f \n", new.direction->w);
+
 
 	if (!calculate_view_reference(&scene))
 		exception(MALLOC, NULL, 1);

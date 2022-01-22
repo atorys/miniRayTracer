@@ -49,7 +49,9 @@ struct s_view
 	double		x_change;
 	double		y_change;
 
-	double 		rotation_angle;
+	double 		rotation_x;
+	double 		rotation_y;
+	double 		rotation_z;
 
 	t_matrix*	rotation;
 	t_matrix*	no_rotation;
@@ -131,10 +133,6 @@ void	ft_skip_whitespace(const char *str, int *i);
  */
 int			new_image(t_scene *scene);
 int			ft_convert_rgb_int(t_color color);
-
-
-t_vector	normal_at(t_object *object, t_point *point);
-
 
 //void	ft_rotate_v(t_view *view, t_vector **v);
 //t_color	intersect_sp(t_data *rt, t_vector *ray, double *distance);

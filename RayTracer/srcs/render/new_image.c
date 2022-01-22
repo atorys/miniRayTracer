@@ -13,23 +13,13 @@ int	ft_convert_rgb_int(t_color color)
 	return (((int)color.x << 16 | (int)color.y << 8 | (int)color.z));
 }
 
-t_vector	normal_at(t_object *object, t_point *point)
-{
-	t_vector normal;
-
-	normal = subtract(point, &(object->center));
-	normalize(&normal);
-	return (normal);
-}
-
 int hit(t_scene *scene, t_ray *ray)
 {
 	t_object	*object;
-	t_color 	closest_color;
-	double		distance;
+	t_object	*closest_object;
 	double		min_distance;
 
-	closest_color = new_tuple(0, 0, 0, COLOR);
+	closest_object = NULL;
 	object = scene->object;
 	min_distance = MAX_DOUBLE;
 	while (object)
@@ -37,11 +27,13 @@ int hit(t_scene *scene, t_ray *ray)
 		t_pair t = intersect(object, ray);
 		if (t.x < min_distance && t.x != MAX_DOUBLE && t.x > 0) {
 			min_distance = t.x;
-			closest_color = object->color;
+			closest_object = object;
 		}
 		object = object->next;
 	}
-	return (ft_convert_rgb_int(closest_color));
+	if (closest_object)
+		return (lightning(scene, closest_object, ray, min_distance));
+	return (0);
 }
 
 void	ray_tracing(t_scene *scene)
@@ -60,7 +52,9 @@ void	ray_tracing(t_scene *scene)
 		x = -(half_w) - 1;
 		while (++x < half_w)
 		{
-			t_point position = new_tuple(x * scene->view.x_change, y * scene->view.y_change, scene->camera.object.center.z - 1, POINT);
+			t_point position = new_tuple(x * scene->view.x_change,
+										 y * scene->view.y_change,
+										 scene->camera.object.center.z - 1, POINT);
 			t_vector direction = subtract(&position, &(scene->camera.object.center));
 			direction = multiply_matrix_tuple(scene->view.rotation, &direction);
 			normalize(&direction);

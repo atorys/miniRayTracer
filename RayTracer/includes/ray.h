@@ -8,6 +8,7 @@
 #include "minirt.h"
 
 typedef struct s_ray	t_ray;
+typedef struct s_scene_attributes	t_scene;
 
 struct s_ray
 {
@@ -21,11 +22,14 @@ struct s_ray
 //	t_object*	object;
 //};
 
-t_ray	new_ray(t_point *origin, t_vector *direction);
-t_point	ray_position(t_ray *ray, double distance);
+t_ray		new_ray(t_point *origin, t_vector *direction);
+t_point		ray_position(const t_ray *ray, double distance);
+t_ray		transform(const t_ray *ray, t_matrix *matrix);
 
-
-t_pair	intersect(t_object*	this, void *ray);
-t_pair	intersect_sp(void *this, void *ray);
+t_vector	reflect(const t_vector* ray, const t_vector* normal);
+int			lightning(t_scene *scene,
+					 t_object *object,
+					 t_ray *ray,
+					 double distance);
 
 #endif

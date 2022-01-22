@@ -30,6 +30,8 @@ MATH_SRCS		=	collations.c			\
 
 RENDER_SRCS		=	new_image.c			\
 					ray.c				\
+					light.c				\
+					normal.c			\
                     intersections.c
 
 PARSER_SRCS		=	converter_file.c	\
