@@ -3,7 +3,6 @@
 //
 
 #include "minirt.h"
-#include "get_next_line.h"
 #include "stdlib.h"
 
 int	key_hook(int keycode, t_scene *scene)
@@ -19,13 +18,13 @@ int	key_hook(int keycode, t_scene *scene)
 		scene->camera.object.center.z++;
 	if (keycode == 2 || keycode == 100) // D
 		scene->camera.object.center.x -= 0.2;
-	if (keycode == 123) // left arrow
+	if (keycode == 123 || keycode == 65361) // left arrow
 		scene->view.rotation_z += 10;
-	if (keycode == 124) // right arrow
+	if (keycode == 124 || keycode == 65363) // right arrow
 		scene->view.rotation_z -= 10;
-	if (keycode == 126) // up arrow
+	if (keycode == 126 || keycode == 65362) // up arrow
 		scene->view.rotation_x += 10;
-	if (keycode == 125) // down arrow
+	if (keycode == 125 || keycode == 65364) // down arrow
 		scene->view.rotation_x -= 10;
 	if (keycode >= 123 && keycode <= 126)
 		scene->view.rotation = new_rotation_matrix(scene->view.rotation_x,
@@ -64,7 +63,7 @@ void free_scene(t_scene *scene)
 	t_object	*tmp_object;
 	t_object	*ptr_object;
 
-	mlx_destroy_window(scene->mlx, scene->win);
+//	mlx_destroy_window(scene->mlx, scene->win);
 	ptr_light = scene->l_lights;
 	while (ptr_light)
 	{

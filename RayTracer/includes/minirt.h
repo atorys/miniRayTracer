@@ -13,14 +13,14 @@
 # include "objects.h"
 # include "ray.h"
 
-# ifdef	LINUX
+//# ifdef	LINUX
 #	include "../mlx/mlx_linux/mlx.h"
-# else
-#	include "mlx.h"
-# endif
+//# elseif
+//#	include "mlx.h"
+//# endif
 
-# define WIN_HEIGHT	600
-# define WIN_WIDTH	800
+# define WIN_HEIGHT	1080
+# define WIN_WIDTH	1920
 # define SUCCESS	1
 # define ERROR		0
 
