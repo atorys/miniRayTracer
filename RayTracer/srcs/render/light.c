@@ -46,7 +46,7 @@ t_color ft_color_multiplication(t_color *light_col, double scalar)
 	return (color);
 }
 
-void apply_light(t_light *light, t_color *color, t_ray *ray, double distance, t_vector * normal)
+void apply_light(t_scene *scene, t_light *light, t_color *color, t_ray *ray, double distance, t_vector * normal)
 {
 	t_vector light_ray;
 	t_vector minus_d;
@@ -73,6 +73,7 @@ void apply_light(t_light *light, t_color *color, t_ray *ray, double distance, t_
 	{
 		diffuse = multiply_on_scalar(&effective_color, dot(&light_ray, normal));
 		t_vector minus_light = multiply_on_scalar(&light_ray, -1);
+//		t_vector minus_light = subtract(&(light->object.center), &point);
 		t_vector reflected = reflect(&minus_light, normal);
 		if (dot(&reflected, &minus_d) <= 0)
 			specular = new_tuple(0, 0, 0, COLOR);
@@ -81,7 +82,9 @@ void apply_light(t_light *light, t_color *color, t_ray *ray, double distance, t_
 			specular = multiply_on_scalar(&light->object.color, factor);
 		}
 	}
-	*color = ft_color_addition(&diffuse, &specular);
+	*color = ft_color_addition(color, &diffuse);
+	*color = ft_color_addition(color, &specular);
+//	*color = ft_color_addition(&diffuse, &specular);
 //	color = &diffuse;
 }
 
@@ -103,12 +106,12 @@ int	lightning(t_scene *scene, t_object *object, t_ray *ray, double distance)
 	point = ray_position(ray, distance);
 	normal = normal_at(object, &point);
 	light_ptr = scene->l_lights;
+	color = ft_color_multiplication(&color, scene->a_light.ratio);
 	while (light_ptr)
 	{
-		apply_light(light_ptr, &color, ray, distance, &normal);
+		apply_light(scene, light_ptr, &color, ray, distance, &normal);
 		light_ptr = (t_light *)light_ptr->object.next;
 	}
-//	color = ft_color_multiplication(&color, scene->a_light.ratio);
 	return (ft_convert_rgb_int(color));
 //	t_point point = ray_position(ray, distance);
 //

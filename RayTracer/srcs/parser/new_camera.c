@@ -12,8 +12,8 @@ void	new_camera(t_camera *camera, const char *line)
 	if (!get_tuple(line, &(camera->object.center), &i, POINT) \
 	|| !get_tuple(line, &(camera->orientation), &i, VECTOR))
 		exception(INVALID_VECTOR, line, 1);
-//	if (module_v(&camera->orientation) != 1) // todo : each should be -1;1
-//		exception(INVALID_VECTOR, line, 1);
+	if (module_v(&camera->orientation) != 1) // todo : each should be -1;1
+		exception(INVALID_VECTOR, line, 1);
 
 	if (!get_digit(line, &(camera->view_degree), &i, 3) \
 	|| camera->view_degree < 0 || camera->view_degree > 180)
