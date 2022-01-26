@@ -17,7 +17,8 @@ struct	s_object_base_interface
 	int					ident;
 	t_point				center;
 	t_color				color;
-	double 				shine;
+	double 				reflective;
+	double 				specular;
 
 	t_print_func 		print_func;
 	t_intersection_func	intersection_func;
@@ -65,8 +66,8 @@ struct	s_ambient
  */
 struct	s_camera
 {
-	t_object	object;
-
+	int			ident;
+	t_point		center;
 	t_vector	orientation;
 	double		view_degree;
 };
@@ -79,8 +80,12 @@ struct	s_camera
  */
 struct	s_light
 {
-	t_object	object;
+	int			ident;
+	t_point		center;
+	t_color		color;
 	double		bright;
+
+	t_light 	*next;
 };
 
 /*

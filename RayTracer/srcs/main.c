@@ -11,13 +11,13 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == 65307 || keycode == 53)
 		exit(0);
 	if (keycode == 13 || keycode == 119) // W
-		scene->camera.object.center.z--;
+		scene->camera.center.z--;
 	if (keycode == 0 || keycode == 97) // A
-		scene->camera.object.center.x += 0.2;
+		scene->camera.center.x += 0.2;
 	if (keycode == 1 || keycode == 115) // S
-		scene->camera.object.center.z++;
+		scene->camera.center.z++;
 	if (keycode == 2 || keycode == 100) // D
-		scene->camera.object.center.x -= 0.2;
+		scene->camera.center.x -= 0.2;
 	if (keycode == 123 || keycode == 65361) // left arrow
 		scene->view.rotation_z += 10;
 	if (keycode == 124 || keycode == 65363) // right arrow
@@ -36,7 +36,16 @@ int	key_hook(int keycode, t_scene *scene)
 
 int	mouse_hook(int button, int x, int y, t_scene *scene)
 {
-	printf("%d, %d, %d\n", button, x, y);
+	if (button == 7)
+		scene->camera.center.x -= 0.01;
+	if (button == 6)
+		scene->camera.center.x += 0.01;
+	if (button == 4)
+		scene->camera.center.z -= 0.2;
+	if (button == 5)
+		scene->camera.center.z += 0.2;
+	new_image(scene);
+//	printf("%d, %d, %d\n", button, x, y);
 }
 
 int	calculate_view_reference(t_scene *scene)
@@ -68,7 +77,7 @@ void free_scene(t_scene *scene)
 	while (ptr_light)
 	{
 		tmp = ptr_light;
-		ptr_light = (t_light *)ptr_light->object.next;
+		ptr_light = ptr_light->next;
 		free(tmp);
 		tmp = NULL;
 	}
@@ -91,33 +100,10 @@ int	main(int ac, char **av)
 	init_scene(&scene);
 	if (!(convert_file(av[1], &scene)))
 		exception(NULL, NULL, 1);
-	if (!scene.camera.object.ident)
+	if (!scene.camera.ident)
 		exception(NO_VAL, "Camera", 1);
 	if (!init_mlx(&scene))
 		exception(MLX, NULL, 1);
-
-//	t_sphere sphere;
-//	sphere.object.ident = sp;
-//	sphere.object.center = (t_point){0, 0, 0, POINT};
-//	sphere.object.next = NULL;
-//	sphere.diameter = 2;
-//	sphere.object.color = (t_color){255, 0, 0, COLOR};
-//	sphere.object.intersection_func = intersect_sp;
-
-//	t_vector normal = new_tuple(0, -1, 0, VECTOR);
-//	t_vector vector = new_tuple(sqrt(2)/2 ,sqrt(2)/2, 0, VECTOR);
-//	t_vector refl = reflect(&vector, &normal);
-//
-//	printf("%f ", refl.x);
-//	printf("%f ", refl.y);
-//	printf("%f \n", refl.z);
-//	printf("%f \n", new.origin->w);
-//	printf("%f ", new.direction->x);
-//	printf("%f ", new.direction->y);
-//	printf("%f ", new.direction->z);
-//	printf("%f \n", new.direction->w);
-
-
 	if (!calculate_view_reference(&scene))
 		exception(MALLOC, NULL, 1);
 	new_image(&scene);

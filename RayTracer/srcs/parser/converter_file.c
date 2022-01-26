@@ -28,6 +28,8 @@ int	get_object(const char *line, t_scene *scene)
 		new_cylinder(&(scene->object), &(line[i_space]));
 	else if (!ft_strncmp(&(line[i]), "pl", (int)ft_max(i_space - i, 2), 0))
 		new_plane(&(scene->object), &(line[i_space]));
+	else if (!ft_strncmp(&(line[i]), "#", (int)ft_max(i_space - i, 1), 0))
+		return (SUCCESS);
 	else
 		return (exception(BAD_IDENT, (char *)&(line[i]), 0));
 	return (SUCCESS);

@@ -42,10 +42,16 @@ void	new_sphere(t_object **object, const char *line)
 	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
+	if (!get_digit(line, &(new->object.reflective), &i, 3))
+		exception(INVALID_PARAMETER, line, 1);
+
+	if (!get_digit(line, &(new->object.specular), &i, 3))
+		exception(INVALID_PARAMETER, line, 1);
+
+
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
-	new->object.shine = 200;
 	new->object.print_func = print_sphere;
 	new->object.intersection_func = intersect_sp;
 	new->object.normal_func = normal_at_sphere;
@@ -73,10 +79,15 @@ void    new_plane(t_object **object, const char *line)
 	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
+	if (!get_digit(line, &(new->object.reflective), &i, 3))
+		exception(INVALID_PARAMETER, line, 1);
+
+	if (!get_digit(line, &(new->object.specular), &i, 3))
+		exception(INVALID_PARAMETER, line, 1);
+
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
-	new->object.shine = 50;
 	new->object.print_func = print_plane;
 	new->object.intersection_func = NULL;
 }
@@ -108,10 +119,15 @@ void	new_cylinder(t_object **object, const char *line)
 	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
+	if (!get_digit(line, &(new->object.reflective), &i, 3))
+		exception(INVALID_PARAMETER, line, 1);
+
+	if (!get_digit(line, &(new->object.specular), &i, 3))
+		exception(INVALID_PARAMETER, line, 1);
+
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
-	new->object.shine = 50;
 	new->object.print_func = print_cylinder;
 	new->object.intersection_func = NULL;
 }

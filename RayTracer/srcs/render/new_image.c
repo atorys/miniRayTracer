@@ -54,11 +54,11 @@ void	ray_tracing(t_scene *scene)
 		{
 			t_point position = new_tuple(x * scene->view.x_change,
 										 y * scene->view.y_change,
-										 scene->camera.object.center.z - 1, POINT);
-			t_vector direction = subtract(&position, &(scene->camera.object.center));
+										 scene->camera.center.z - 1, POINT);
+			t_vector direction = subtract(&position, &(scene->camera.center));
 			direction = multiply_matrix_tuple(scene->view.rotation, &direction);
 			normalize(&direction);
-			ray = new_ray(&(scene->camera.object.center), &direction);
+			ray = new_ray(&(scene->camera.center), &direction);
 			put_pixel(&(scene->canvas), \
 									(int)ft_module(x + half_w), \
 									(int)ft_module(y - half_h), \
