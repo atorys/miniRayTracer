@@ -3,6 +3,14 @@ NAME			=	miniRT
 
 INCLUDES		=	-I ./includes/
 
+HEADERS			=	./includes/get_next_line.h	\
+					./includes/maths.h			\
+					./includes/matrix.h			\
+					./includes/minirt.h			\
+					./includes/objects.h		\
+					./includes/ray.h			\
+					./includes/tuple.h
+
 VPATH			=	./srcs/				\
 					./srcs/get_nextline/\
 					./mlx/mlx_linux/	\
@@ -15,8 +23,7 @@ VPATH			=	./srcs/				\
 #:::: FILES ::::::::::::::::::::::::::::::::::::::::::::::::::
 SRCS_NAME		=	main.c		\
 					init.c		\
-					exception.c \
-					print_obj.c
+					exception.c
 
 GNL_SRCS		=	get_next_line.c		\
                  	get_next_line_utils.c
@@ -26,11 +33,13 @@ MATH_SRCS		=	collations.c			\
 					ft_pow.c				\
 					ft_quadratic_roots.c	\
 					tuple.c					\
+					vector.c				\
 					matrix.c
 
 RENDER_SRCS		=	new_image.c			\
 					ray.c				\
 					light.c				\
+					color.c				\
 					normal.c			\
                     intersections.c
 
@@ -100,7 +109,7 @@ $(NAME):		$(OBJS)
 				@$(MAKE)	-C			$(MLX_PATH)
 				@$(CC)	$(OBJS)	$(LIBRARY) $(MLX_LIBRARY) $(LINK_MLX_FLAGS) -o $(NAME)
 
-$(OBJS):		$(SRCS)
+$(OBJS):		$(SRCS) $(HEADERS)
 				@gcc -g	$(INCLUDES)	-c	$(SRCS) $(OBJ_MLX_FLAGS)
 				@mkdir	-p				$(OBJS_DIR)
 				@mv		$(OBJS_NAME)	$(OBJS_DIR)

@@ -27,6 +27,8 @@
 typedef struct s_scene_attributes	t_scene;
 typedef struct s_image				t_image;
 typedef struct s_view				t_view;
+typedef struct s_ray				t_ray;
+
 
 struct s_image
 {
@@ -82,7 +84,6 @@ struct s_scene_attributes
 /*
  * EXCEPTION.C
  */
-
 int		exception(const char *message, const char *error_line, int code);
 
 # define DEF_COLOR               "\033[1;31m"
@@ -131,12 +132,23 @@ void	ft_skip_whitespace(const char *str, int *i);
 /*
  * RENDER
  */
-int			new_image(t_scene *scene);
-int			ft_convert_rgb_int(t_color color);
+typedef struct s_hit	t_hit;
+struct	s_hit
+{
+	t_object	*object;
+	t_pair		pair;
+};
 
-//void	ft_rotate_v(t_view *view, t_vector **v);
-//t_color	intersect_sp(t_data *rt, t_vector *ray, double *distance);
-//double	light_intensity(t_data *rt, t_vector *ray, t_vector *normal);
-//t_color light_intensity(t_data *rt, t_vector *ray, t_vector *normal);
+int			new_image(t_scene *scene);
+t_hit		hit(t_scene *scene, t_ray *ray);
+
+/*
+ * COLOR.C
+ */
+int			ft_convert_rgb_int(t_color color);
+t_color		ft_color_multiplication(t_color *light_col,
+									   double scalar);
+t_color		ft_color_addition(t_color *light_col,
+								 t_color *object_col);
 
 #endif

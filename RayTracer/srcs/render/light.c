@@ -4,55 +4,12 @@
 
 #include "minirt.h"
 
-
-t_vector	reflect(const t_vector* ray, const t_vector* normal)
-{
-	t_vector reflected;
-
-	t_vector mult = multiply_on_scalar(normal, 2 * dot(ray, normal));
-	reflected = subtract(ray, &mult);
-	return (reflected);
-}
-
-t_color ft_color_addition(t_color *light_col, t_color *object_col)
-{
-	t_color color;
-
-	color.x = object_col->x  + light_col->x;
-	if (color.x  > 255)
-		color.x = 255;
-	color.y = object_col->y  + light_col->y;
-	if (color.y  > 255)
-		color.y = 255;
-	color.z = object_col->z + light_col->z;
-	if (color.z > 255)
-		color.z = 255;
-	return (color);
-}
-
-t_color ft_color_multiplication(t_color *light_col, double scalar)
-{
-	t_color color;
-
-	color.x = light_col->x * scalar;
-	if (color.x  > 255)
-		color.x = 255;
-	color.y = light_col->y * scalar;
-	if (color.y  > 255)
-		color.y = 255;
-	color.z = light_col->z * scalar;
-	if (color.z > 255)
-		color.z = 255;
-	return (color);
-}
-
 void apply_light(t_scene *scene, t_light *light, t_color *color, t_ray *ray, double distance, t_vector * normal)
 {
 	t_vector light_ray;
 	t_vector minus_d;
 	t_point point;
 
-	t_color ambient;
 	t_color diffuse;
 	t_color specular;
 
@@ -63,7 +20,6 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_ray *ray, dou
 	normalize(&light_ray);
 
 	effective_color = ft_color_multiplication(&light->color, light->bright);
-	ambient = ft_color_multiplication(&scene->a_light.color, scene->a_light.ratio);
 	minus_d = multiply_on_scalar(ray->direction, -1);
 	if (dot(&light_ray, normal) < 0)
 	{
@@ -82,11 +38,26 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_ray *ray, dou
 			specular = multiply_on_scalar(&light->color, factor * 0.9);
 		}
 	}
-	*color = ft_color_addition(color, &ambient);
 	*color = ft_color_addition(color, &diffuse);
 	*color = ft_color_addition(color, &specular);
 }
 
+bool	is_shadowed(t_scene *scene, t_light *light, t_point *point)
+{
+	t_vector	point_light_v;
+	double		distance;
+	t_ray		ray;
+	t_hit		h;
+
+	point_light_v = subtract(&light->center, point);
+	distance = module_v(&point_light_v);
+	normalize(&point_light_v);
+	ray = new_ray(point, &point_light_v);
+	h = hit(scene, &ray);
+	if (h.object && h.pair.x < distance)
+		return (true);
+	return (false);
+}
 
 int	lightning(t_scene *scene, t_object *object, t_ray *ray, double distance)
 {
@@ -99,11 +70,14 @@ int	lightning(t_scene *scene, t_object *object, t_ray *ray, double distance)
 	point = ray_position(ray, distance);
 	normal = normal_at(object, &point);
 	light_ptr = scene->l_lights;
+	color = ft_color_multiplication(&color, scene->a_light.ratio);
+//	t_color ambient = ft_color_multiplication(&scene->a_light.color, scene->a_light.ratio);
+//	color = ft_color_addition(&color, &ambient);
 	while (light_ptr)
 	{
-		apply_light(scene, light_ptr, &color, ray, distance, &normal);
+		if (!is_shadowed(scene, light_ptr, &point))
+			apply_light(scene, light_ptr, &color, ray, distance, &normal);
 		light_ptr = light_ptr->next;
 	}
-//	color = ft_color_multiplication(&color, scene->a_light.ratio);
 	return (ft_convert_rgb_int(color));
 }

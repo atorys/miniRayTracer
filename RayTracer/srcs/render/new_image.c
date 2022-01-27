@@ -8,31 +8,35 @@ void	put_pixel(t_image *image, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	ft_convert_rgb_int(t_color color)
+t_hit	hit(t_scene *scene, t_ray *ray)
 {
-	return (((int)color.x << 16 | (int)color.y << 8 | (int)color.z));
-}
-
-int hit(t_scene *scene, t_ray *ray)
-{
+	t_hit		h;
 	t_object	*object;
-	t_object	*closest_object;
 	double		min_distance;
 
-	closest_object = NULL;
 	object = scene->object;
 	min_distance = MAX_DOUBLE;
+	h.object = NULL;
 	while (object)
 	{
-		t_pair t = intersect(object, ray);
-		if (t.x < min_distance && t.x != MAX_DOUBLE && t.x > 0) {
-			min_distance = t.x;
-			closest_object = object;
+		t_pair pair = intersect(object, ray);
+		if (pair.x < min_distance && pair.x != MAX_DOUBLE && pair.x > 0) {
+			min_distance = pair.x;
+			h.object = object;
+			h.pair = pair;
 		}
 		object = object->next;
 	}
-	if (closest_object)
-		return (lightning(scene, closest_object, ray, min_distance));
+	return (h);
+}
+
+int	new_color(t_scene *scene, t_ray *ray)
+{
+	t_hit h;
+
+	h = hit(scene, ray);
+	if (h.object)
+		return (lightning(scene, h.object, ray, h.pair.x));
 	return (0);
 }
 
@@ -62,7 +66,7 @@ void	ray_tracing(t_scene *scene)
 			put_pixel(&(scene->canvas), \
 									(int)ft_module(x + half_w), \
 									(int)ft_module(y - half_h), \
-										hit(scene, &ray));
+										new_color(scene, &ray));
 		}
 	}
 }

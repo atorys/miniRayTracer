@@ -27,27 +27,6 @@ bool	compare_tuples(const t_tuple *tuple1, const t_tuple *tuple2)
 			ft_equal(tuple1->w, tuple2->w));
 }
 
-double  module_v(const t_vector* vector)
-{
-	return (sqrt((vector->x * vector->x) +
-				 (vector->y * vector->y) +
-				 (vector->z * vector->z) +
-				 (vector->w * vector->w)));
-}
-
-void    normalize(t_vector *vector)
-{
-	double	module;
-
-	module = module_v(vector);
-	if (!module)
-		return ;
-	vector->x /= module;
-	vector->y /= module;
-	vector->z /= module;
-	vector->w /= module;
-}
-
 /*
  * POINT (W = 1) + VECTOR (W = 0) = POINT (W = 1)
  * VECTOR (W = 0) + VECTOR (W = 0) = VECTOR (W = 0)
@@ -102,28 +81,4 @@ t_tuple   multiply_on_scalar(const t_tuple *tuple1, double scalar)
 				   tuple1->z * scalar,
 				   tuple1->w);
 	return (tuple2);
-}
-
-double	dot(const t_vector* vector1, const t_vector* vector2)
-{
-	return (vector1->x * vector2->x +
-			vector1->y * vector2->y +
-			vector1->z * vector2->z +
-			vector1->w * vector2->w);
-}
-
-/*                             v1  v2
- * Векторное умножение         |  /
- * @param v1 - первый вектор   | /
- * @param v2 - второй          |/______v3
- * @return вектор v3 перпендикулярный v1 и v2
- */
-t_vector	cross(const t_vector* vector1, const t_vector* vector2)
-{
-	t_vector	v3;
-	v3 = new_tuple((vector1->y * vector2->z) - (vector1->z * vector2->y),
-				(vector1->z * vector2->x) - (vector1->x * vector2->z),
-				(vector1->x * vector2->y) - (vector1->y * vector2->x),
-				VECTOR);
-	return (v3);
 }

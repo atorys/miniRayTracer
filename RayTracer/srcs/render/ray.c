@@ -11,6 +11,7 @@ t_ray	new_ray(t_point *origin, t_vector *direction)
 
 	ray.origin = origin;
 	ray.direction = direction;
+	ray.dot_direction = dot(direction, direction);
 	return (ray);
 }
 

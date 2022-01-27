@@ -52,7 +52,7 @@ void	new_sphere(t_object **object, const char *line)
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
-	new->object.print_func = print_sphere;
+	new->squared_radius = (new->diameter / 2) * (new->diameter / 2);
 	new->object.intersection_func = intersect_sp;
 	new->object.normal_func = normal_at_sphere;
 }
@@ -88,8 +88,8 @@ void    new_plane(t_object **object, const char *line)
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
-	new->object.print_func = print_plane;
 	new->object.intersection_func = NULL;
+	new->object.normal_func = NULL;
 }
 
 void	new_cylinder(t_object **object, const char *line)
@@ -128,6 +128,6 @@ void	new_cylinder(t_object **object, const char *line)
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
-	new->object.print_func = print_cylinder;
 	new->object.intersection_func = NULL;
+	new->object.normal_func = NULL;
 }

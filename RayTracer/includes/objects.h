@@ -8,7 +8,7 @@
 #include "tuple.h"
 
 typedef struct s_object_base_interface	t_object;
-typedef	void (*t_print_func)(void *);
+
 typedef t_pair (*t_intersection_func)(void *, void *);
 typedef t_vector (*t_normal_func)(void * , void *);
 
@@ -20,7 +20,6 @@ struct	s_object_base_interface
 	double 				reflective;
 	double 				specular;
 
-	t_print_func 		print_func;
 	t_intersection_func	intersection_func;
 	t_normal_func 		normal_func;
 
@@ -98,6 +97,7 @@ struct s_sphere
 {
 	t_object	object;
 	double		diameter;
+	double 		squared_radius;
 };
 
 /*
@@ -128,17 +128,15 @@ struct	s_cylinder
 	double		height;
 };
 
-void		print_object(t_object*	this);
+/*
+ * NORMAL.C
+ */
+t_vector	normal_at(t_object* this, void *point);
+t_vector	normal_at_sphere(void *this, void *point);
 
-void		print_object_default(void * this_ptr);
-void		print_sphere(void * this_ptr);
-void		print_plane(void * this_ptr);
-void		print_cylinder(void * this_ptr);
-void		print_camera(void * this_ptr);
-
-t_vector	normal_at(t_object* this, t_point *point);
-t_vector	normal_at_sphere(t_sphere *sphere, const t_point *point);
-
+/*
+ * INTERSECTIONS.C
+ */
 t_pair		intersect(t_object*	this, void *ray);
 t_pair		intersect_sp(void *this, void *ray);
 

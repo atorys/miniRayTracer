@@ -14,6 +14,7 @@ struct s_ray
 {
 	t_point 	*origin;
 	t_vector 	*direction;
+	double 		dot_direction;
 };
 
 //struct s_intersection

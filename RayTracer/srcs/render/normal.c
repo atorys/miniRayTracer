@@ -4,15 +4,17 @@
 
 #include "objects.h"
 
-t_vector	normal_at(t_object* this, t_point *point)
+t_vector	normal_at(t_object* this, void *point)
 {
 	return(this->normal_func(this, point));
 }
 
-t_vector	normal_at_sphere(t_sphere *sphere, const t_point *point)
+t_vector	normal_at_sphere(void *this, void *point)
 {
 	t_vector normal;
+	t_sphere *sphere;
 
+	sphere = (t_sphere *)this;
 	normal = subtract(point, &(sphere->object.center));
 	normalize(&normal);
 	return (normal);
