@@ -140,6 +140,11 @@ struct	s_hit
 };
 
 int			new_image(t_scene *scene);
+t_color		new_color(t_scene *scene, t_ray *ray, int recursion_depth);
+t_color		lightning(t_scene *scene,
+						 t_object *object,
+						 t_ray *ray,
+						 double distance);
 t_hit		hit(t_scene *scene, t_ray *ray);
 
 /*
