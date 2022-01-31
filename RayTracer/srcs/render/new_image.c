@@ -42,13 +42,15 @@ t_color	new_color(t_scene *scene, t_ray *ray, int recursion_depth)
 	if (recursion_depth <= 0 || h.object->reflective < 0)
 		return (color);
 
-	t_vector minus_d = multiply_on_scalar(ray->direction, -1);
-	normalize(&minus_d);
 	t_point point = ray_position(ray, h.pair.x);
-	t_ray minus_ray = new_ray(&point, &minus_d);
+//	t_vector minus_d = multiply_on_scalar(ray->direction, -1);
+//	t_vector minus_d = subtract(&(scene->camera.center), &point);
+//	normalize(&minus_d);
 	t_vector normal = normal_at(h.object, &point);
-	t_vector reflected = reflect(minus_ray.direction, &normal);
-	t_color reflected_color = new_color(scene, &minus_ray, recursion_depth - 1);
+	t_vector reflected = reflect(ray->direction, &normal);
+	normalize(&reflected);
+	t_ray reflected_ray = new_ray(&point, &reflected);
+	t_color reflected_color = new_color(scene, &reflected_ray, recursion_depth - 1);
 	color = ft_color_multiplication(&color, 1 - h.object->reflective);
 	reflected_color = ft_color_multiplication(&color, h.object->reflective);
 
@@ -81,7 +83,7 @@ void	ray_tracing(t_scene *scene)
 			put_pixel(&(scene->canvas), \
 									(int)ft_module(x + half_w), \
 									(int)ft_module(y - half_h), \
-										ft_convert_rgb_int(new_color(scene, &ray, 3)));
+										ft_convert_rgb_int(new_color(scene, &ray, 2)));
 		}
 	}
 }

@@ -76,9 +76,8 @@ t_color	lightning(t_scene *scene, t_object *object, t_ray *ray, double distance)
 	{
 //		t_vector n = multiply_on_scalar(&normal, EPSILON);
 //		point = add(&point, &n);
-		if (!is_shadowed(scene, light_ptr, &point)) {
+		if (!is_shadowed(scene, light_ptr, &point))
 			apply_light(scene, light_ptr, &color, ray, distance, &normal);
-		}
 		light_ptr = light_ptr->next;
 	}
 //	color = ft_color_multiplication(&color, scene->a_light.ratio);

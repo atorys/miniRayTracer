@@ -11,11 +11,11 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == 65307 || keycode == 53)
 		exit(0);
 	if (keycode == 13 || keycode == 119) // W
-		scene->camera.center.z--;
+		scene->camera.center.y -= 0.2;
 	if (keycode == 0 || keycode == 97) // A
 		scene->camera.center.x += 0.2;
 	if (keycode == 1 || keycode == 115) // S
-		scene->camera.center.z++;
+		scene->camera.center.y += 0.2;
 	if (keycode == 2 || keycode == 100) // D
 		scene->camera.center.x -= 0.2;
 	if (keycode == 123 || keycode == 65361) // left arrow
@@ -41,9 +41,9 @@ int	mouse_hook(int button, int x, int y, t_scene *scene)
 	if (button == 6)
 		scene->camera.center.x += 0.01;
 	if (button == 4)
-		scene->camera.center.z -= 0.2;
+		scene->camera.center.z -= 1;
 	if (button == 5)
-		scene->camera.center.z += 0.2;
+		scene->camera.center.z += 1;
 	new_image(scene);
 //	printf("%d, %d, %d\n", button, x, y);
 }
