@@ -26,8 +26,8 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computa
 		cosine = dot(&reflected, &(computations->eye_v));
 		if (cosine > 0)
 		{
-			double factor = ft_pow(cosine, 140);
-			specular = multiply_on_scalar(&(light->color), factor * 0.9);
+			double factor = ft_pow(cosine, (int)computations->object->specular);
+			specular = multiply_on_scalar(&(light->color), factor * 0.8);
 		}
 	}
 	*color = ft_color_addition(color, &diffuse);
@@ -67,14 +67,16 @@ t_color	lightning(t_scene *scene, t_comp *computations)
 	color = ft_color_addition(&(computations->object->color),
 							  &(scene->ambient.effective_color));
 	light_ptr = scene->lights;
+	color = ft_color_multiplication(&color, scene->ambient.ratio);
 	while (light_ptr)
 	{
-		if (!is_shadowed(scene, light_ptr, &(computations->over_point)))
+		if (!is_shadowed(scene, light_ptr, &(computations->over_point))) {
 			apply_light(scene, light_ptr, &color, computations);
-		else
+		}
+		else {
 			apply_shadow(scene, light_ptr, &color, computations);
+		}
 		light_ptr = light_ptr->next;
 	}
-//	color = ft_color_multiplication(&color, scene->ambient.ratio);
 	return (color);
 }

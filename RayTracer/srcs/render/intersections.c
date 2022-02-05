@@ -29,6 +29,10 @@ t_pair	intersect_pl(void *this, void *ray)
 	t_plane		*plane;
 	t_ray 		*r;
 	t_pair 		pair;
+	t_vector	plane_to_ray;
+	double		a;
+	double		b;
+	double		c;
 
 	plane = (t_plane *)this;
 	r = (t_ray *)ray;
@@ -36,16 +40,16 @@ t_pair	intersect_pl(void *this, void *ray)
 	pair.x = MAX_DOUBLE;
 	pair.y = MAX_DOUBLE;
 
-	double b = plane->orientation.x * r->direction.x +
-			plane->orientation.y * r->direction.y +
-			plane->orientation.z * r->direction.z;
-	double a = plane->orientation.x * plane->object.center.x +
-			   plane->orientation.y * plane->object.center.y +
-			   plane->orientation.z * plane->object.center.z;
-
-//	if (a != 0 && b != 0)
-//	{
-		pair.x = -(a / b);
-//	}
+	plane_to_ray = subtract(&(r->origin), &(plane->object.center));
+//	plane_to_ray = multiply_on_scalar(&(plane_to_ray), -1);
+	a = dot(&(plane->orientation), &plane_to_ray);
+	b = dot(&(plane->orientation), &(r->direction));
+	if (b < 0) {
+		plane->orientation = multiply_on_scalar(&(plane->orientation), -1);
+		a = dot(&(plane->orientation), &plane_to_ray);
+		b = dot(&(plane->orientation), &(r->direction));
+	}
+	if (b != 0 && ((a > 0 && b < 0) || (a < 0 && b > 0)))
+		pair.x = -a / b;
 	return (pair);
 }
