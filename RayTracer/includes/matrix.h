@@ -23,6 +23,7 @@ t_matrix*	new_identity_matrix(int size);
 t_matrix*	new_translation_matrix(double x, double y, double z);
 t_matrix*	new_scaling_matrix(double x, double y, double z);
 t_matrix*	new_rotation_matrix(double x_axis, double y_axis, double z_axis);
+t_matrix*	new_orientation_matrix(t_vector *left, t_vector *up, t_vector *forward);
 void		free_matrix(t_matrix *matrix);
 
 bool		compare_matrix(t_matrix *matrix1, t_matrix *matrix2);

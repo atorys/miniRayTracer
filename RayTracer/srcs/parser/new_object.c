@@ -88,8 +88,8 @@ void    new_plane(t_object **object, const char *line)
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
 
-	new->object.intersection_func = NULL;
-	new->object.normal_func = NULL;
+	new->object.intersection_func = intersect_pl;
+	new->object.normal_func = normal_at_plane;
 }
 
 void	new_cylinder(t_object **object, const char *line)

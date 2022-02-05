@@ -45,5 +45,6 @@ void		scale(t_tuple *tuple, double scalar);
 t_tuple		multiply_on_scalar(const t_tuple *tuple, double scalar);
 
 t_vector	cross(const t_vector* vector1, const t_vector* vector2);
+t_vector	reflect(const t_vector* ray, const t_vector* normal);
 
 #endif

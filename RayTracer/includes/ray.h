@@ -8,25 +8,19 @@
 #include "minirt.h"
 
 typedef struct s_ray	t_ray;
+typedef struct s_view	t_view;
 typedef struct s_scene_attributes	t_scene;
 
 struct s_ray
 {
-	t_point 	*origin;
-	t_vector 	*direction;
+	t_point 	origin;
+	t_vector 	direction;
 	double 		dot_direction;
 };
 
-//struct s_intersection
-//{
-//	t_pair		t;
-//	t_object*	object;
-//};
-
 t_ray		new_ray(t_point *origin, t_vector *direction);
-t_point		ray_position(const t_ray *ray, double distance);
-t_ray		transform(const t_ray *ray, t_matrix *matrix);
-
-t_vector	reflect(const t_vector* ray, const t_vector* normal);
+t_point		ray_position(t_ray *ray, double distance);
+t_ray		transform(t_ray *ray, t_matrix *matrix);
+t_ray		trace_ray(t_point *origin, int x, int y, t_view *view);
 
 #endif

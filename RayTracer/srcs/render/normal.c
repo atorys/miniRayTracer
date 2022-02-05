@@ -19,3 +19,15 @@ t_vector	normal_at_sphere(void *this, void *point)
 	normalize(&normal);
 	return (normal);
 }
+
+t_vector	normal_at_plane(void *this, void *point)
+{
+	t_vector normal;
+	t_plane *plane;
+
+	plane = (t_plane *)this;
+	(void)point;
+	normal = plane->orientation;
+	normalize(&normal);
+	return (normal);
+}

@@ -126,6 +126,25 @@ t_matrix*	new_rotation_matrix(double x_axis, double y_axis, double z_axis)
 	return (new);
 }
 
+t_matrix*	new_orientation_matrix(t_vector *left, t_vector *up, t_vector *forward)
+{
+	t_matrix*	new;
+
+	new = new_identity_matrix(4);
+	if (!new)
+		return (NULL);
+	new->a[0][0] = left->x;
+	new->a[0][1] = left->y;
+	new->a[0][2] = left->z;
+	new->a[1][0] = up->x;
+	new->a[1][1] = up->y;
+	new->a[1][2] = up->z;
+	new->a[2][0] = -(forward->x);
+	new->a[2][1] = -(forward->y);
+	new->a[2][2] = -(forward->z);
+	return (new);
+}
+
 t_matrix*	submatrix(t_matrix *matrix, int i, int j)
 {
 	t_matrix*	new;

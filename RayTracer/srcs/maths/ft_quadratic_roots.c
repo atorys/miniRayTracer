@@ -13,7 +13,7 @@ t_pair	ft_quadratic_roots(double a, double b, double c)
 	{
 		point.x = (-b + sqrt(d)) / (2 * a);
 		point.y = (-b - sqrt(d)) / (2 * a);
-		if (point.x > point.y)
+		if (point.x > point.y && point.x >= 0 && point.y >= 0)
 		{
 			d = point.x;
 			point.x = point.y;

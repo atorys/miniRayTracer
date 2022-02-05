@@ -19,8 +19,8 @@ int	init_scene(t_scene *scene)
 //	scene->view.camera_dir = NULL;
 
 	scene->camera.ident = 0;
-	scene->a_light.ident = 0;
-	scene->l_lights = NULL;
+	scene->ambient.ident = 0;
+	scene->lights = NULL;
 	scene->object = NULL;
 	return (SUCCESS);
 }

@@ -25,7 +25,7 @@ SRCS_NAME		=	main.c		\
 					init.c		\
 					exception.c
 
-GNL_SRCS		=	get_next_line.c		\
+GNL_SRCS		=	get_next_line.c			\
                  	get_next_line_utils.c
 
 MATH_SRCS		=	collations.c			\
@@ -37,17 +37,18 @@ MATH_SRCS		=	collations.c			\
 					matrix.c
 
 RENDER_SRCS		=	new_image.c			\
+					view.c				\
 					ray.c				\
-					light.c				\
-					color.c				\
 					normal.c			\
-                    intersections.c
+                    intersections.c		\
+					color.c				\
+					light.c
 
 PARSER_SRCS		=	converter_file.c	\
-					new_camera.c	\
-					new_ambient.c	\
-					new_light.c		\
-					new_object.c	\
+					new_camera.c		\
+					new_ambient.c		\
+					new_light.c			\
+					new_object.c		\
 					utils.c
 
 LIBRARY			=	libft/libft.a
@@ -91,7 +92,6 @@ else
 endif
 
 FLAGS		= -Wall -Wextra -Werror
-#FLAGS		= -Wall
 
 
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

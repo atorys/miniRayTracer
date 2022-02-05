@@ -42,4 +42,9 @@ void	new_light(t_light **l_light, const char *line)
 
 	if (!ft_isempty(&(line[i])))
 		exception(UNDEFINED_PARAMETER, line, 1);
+
+	/*
+	 * additional calculation for optimization
+	 */
+	new->effective_color =  ft_color_multiplication(&(new->color), new->bright);
 }

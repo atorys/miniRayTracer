@@ -27,7 +27,7 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == 125 || keycode == 65364) // down arrow
 		scene->view.rotation_x -= 10;
 	if (keycode >= 123 && keycode <= 126)
-		scene->view.rotation = new_rotation_matrix(scene->view.rotation_x,
+		scene->view.rotate = new_rotation_matrix(scene->view.rotation_x,
 												   scene->view.rotation_y,
 												   scene->view.rotation_z);
 //	calculate_view_reference(rt); // todo: free vectors
@@ -48,23 +48,6 @@ int	mouse_hook(int button, int x, int y, t_scene *scene)
 //	printf("%d, %d, %d\n", button, x, y);
 }
 
-int	calculate_view_reference(t_scene *scene)
-{
-	scene->view.width = tan(scene->camera.view_degree / 2 * (PI / 180)) * 2;
-	scene->view.height = (double)scene->height / scene->width * scene->view.width;
-	scene->view.x_change = scene->view.width / scene->width;
-	scene->view.y_change = scene->view.height / scene->height;
-
-	scene->view.rotation_x = 0;
-	scene->view.rotation_y = 0;
-	scene->view.rotation_z = 0;
-	scene->view.no_rotation = new_identity_matrix(4);
-	scene->view.rotation = scene->view.no_rotation;
-	if (!scene->view.no_rotation)
-		return (0);
-	return (1);
-}
-
 void free_scene(t_scene *scene)
 {
 	t_light		*ptr_light;
@@ -73,7 +56,7 @@ void free_scene(t_scene *scene)
 	t_object	*ptr_object;
 
 //	mlx_destroy_window(scene->mlx, scene->win);
-	ptr_light = scene->l_lights;
+	ptr_light = scene->lights;
 	while (ptr_light)
 	{
 		tmp = ptr_light;

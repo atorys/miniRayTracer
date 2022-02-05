@@ -19,8 +19,10 @@
 //#	include "mlx.h"
 //# endif
 
-# define WIN_HEIGHT	1080
-# define WIN_WIDTH	1920
+//# define WIN_HEIGHT	1080
+//# define WIN_WIDTH	1920
+# define WIN_HEIGHT	800
+# define WIN_WIDTH	800
 # define SUCCESS	1
 # define ERROR		0
 
@@ -55,8 +57,8 @@ struct s_view
 	double 		rotation_y;
 	double 		rotation_z;
 
-	t_matrix*	rotation;
-	t_matrix*	no_rotation;
+	t_matrix*	transform;
+	t_matrix*	rotate;
 
 //	t_vector	*camera_right;
 //	t_vector	*camera_up;
@@ -75,9 +77,9 @@ struct s_scene_attributes
 	t_image		canvas;
 	t_view		view;
 
-	t_ambient	a_light;
+	t_ambient	ambient;
 	t_camera	camera;
-	t_light		*l_lights;
+	t_light		*lights;
 	t_object 	*object;
 };
 
@@ -86,7 +88,7 @@ struct s_scene_attributes
  */
 int		exception(const char *message, const char *error_line, int code);
 
-# define DEF_COLOR               "\033[1;31m"
+# define DEF_COLOR           "\033[1;31m"
 # define NO_COLOR            "\033[0m"
 
 # define ARGUMENT            "too few arguments"
@@ -139,21 +141,40 @@ struct	s_hit
 	t_pair		pair;
 };
 
+typedef struct s_computations	t_comp;
+struct s_computations
+{
+	t_ray		*ray;
+	t_object	*object;
+	double		distance;
+	t_point		point;
+	t_point		over_point;
+	t_vector	eye_v;
+	t_vector 	normal;
+	bool		inside;
+};
+
+/*
+ * VIEW.C
+ */
+int			calculate_view_reference(t_scene *scene);
+t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up);
+
+/*
+ * NEW_IMAGE.C
+ */
 int			new_image(t_scene *scene);
 t_color		new_color(t_scene *scene, t_ray *ray, int recursion_depth);
-t_color		lightning(t_scene *scene,
-						 t_object *object,
-						 t_ray *ray,
-						 double distance);
-t_hit		hit(t_scene *scene, t_ray *ray);
+t_color		lightning(t_scene *scene, t_comp *computations);
+t_hit		new_hit(t_scene *scene, t_ray *ray);
 
 /*
  * COLOR.C
  */
 int			ft_convert_rgb_int(t_color color);
-t_color		ft_color_multiplication(t_color *light_col,
+t_color		ft_color_multiplication(t_color *color_1,
 									   double scalar);
-t_color		ft_color_addition(t_color *light_col,
-								 t_color *object_col);
+t_color		ft_color_addition(t_color *color_1,
+								 t_color *color_2);
 
 #endif
