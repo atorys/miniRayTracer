@@ -27,7 +27,7 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computa
 		if (cosine > 0)
 		{
 			double factor = ft_pow(cosine, (int)computations->object->specular);
-			specular = multiply_on_scalar(&(light->color), factor * 0.8);
+			specular = multiply_on_scalar(&(light->effective_color), factor * 0.8);
 		}
 	}
 	*color = ft_color_addition(color, &diffuse);

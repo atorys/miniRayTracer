@@ -32,7 +32,6 @@ t_pair	intersect_pl(void *this, void *ray)
 	t_vector	plane_to_ray;
 	double		a;
 	double		b;
-	double		c;
 
 	plane = (t_plane *)this;
 	r = (t_ray *)ray;
@@ -41,15 +40,34 @@ t_pair	intersect_pl(void *this, void *ray)
 	pair.y = MAX_DOUBLE;
 
 	plane_to_ray = subtract(&(r->origin), &(plane->object.center));
-//	plane_to_ray = multiply_on_scalar(&(plane_to_ray), -1);
-	a = dot(&(plane->orientation), &plane_to_ray);
 	b = dot(&(plane->orientation), &(r->direction));
 	if (b < 0) {
 		plane->orientation = multiply_on_scalar(&(plane->orientation), -1);
-		a = dot(&(plane->orientation), &plane_to_ray);
 		b = dot(&(plane->orientation), &(r->direction));
 	}
+	a = dot(&(plane->orientation), &plane_to_ray);
 	if (b != 0 && ((a > 0 && b < 0) || (a < 0 && b > 0)))
 		pair.x = -a / b;
 	return (pair);
+}
+
+t_pair	intersect_cy(void *this, void *ray)
+{
+	t_cylinder	*cylinder;
+	t_vector	cylinder_to_ray;
+	t_ray 		*r;
+	double		a;
+	double		b;
+	double		c;
+
+	cylinder = (t_cylinder *)this;
+	r = (t_ray *)ray;
+
+	cylinder_to_ray = subtract(&(r->origin), &(cylinder->object.center));
+	a = r->dot_direction - ft_pow(dot(&(r->direction), &(cylinder->orientation)), 2);
+	b = 2 * (dot(&(r->direction), &cylinder_to_ray)) - dot(&(r->direction), &(cylinder->orientation)) *
+														dot(&cylinder_to_ray, &(cylinder->orientation));
+	c = dot(&cylinder_to_ray, &cylinder_to_ray) - ft_pow(dot(&cylinder_to_ray, &(cylinder->orientation)), 2)
+												-	ft_pow(cylinder->diameter/2, 2);
+	return (ft_quadratic_roots(a, b, c));
 }

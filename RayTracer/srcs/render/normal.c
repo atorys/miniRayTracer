@@ -31,3 +31,21 @@ t_vector	normal_at_plane(void *this, void *point)
 	normalize(&normal);
 	return (normal);
 }
+
+t_vector	normal_at_cylinder(void *this, void *point)
+{
+	t_vector	normal;
+	t_vector	orientation;
+	t_cylinder	*cylinder;
+	double 		m;
+
+	cylinder= (t_cylinder *)this;
+
+	m = dot();
+
+	normal = subtract(point, &(cylinder->object.center));
+	orientation = multiply_on_scalar(&(cylinder->orientation), cylinder->height);
+	normal = subtract(&normal, &orientation);
+	normalize(&normal);
+	return (normal);
+}

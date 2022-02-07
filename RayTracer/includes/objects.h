@@ -136,6 +136,7 @@ struct	s_cylinder
 t_vector	normal_at(t_object* this, void *point);
 t_vector	normal_at_sphere(void *this, void *point);
 t_vector	normal_at_plane(void *this, void *point);
+t_vector	normal_at_cylinder(void *this, void *point);
 
 /*
  * INTERSECTIONS.C
@@ -143,5 +144,6 @@ t_vector	normal_at_plane(void *this, void *point);
 t_pair		intersect(t_object*	this, void *ray);
 t_pair		intersect_sp(void *this, void *ray);
 t_pair		intersect_pl(void *this, void *ray);
+t_pair		intersect_cy(void *this, void *ray);
 
 #endif
