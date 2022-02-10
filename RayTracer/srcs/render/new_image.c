@@ -42,11 +42,13 @@ void	prepare_computations(t_comp *computations, t_scene *scene, t_ray *ray)
 	}
 	computations->ray = ray;
 	computations->object = hit.object;
-	computations->distance = hit.pair.x;
-	computations->point = ray_position(ray, computations->distance);
+	computations->t1 = hit.pair.x;
+	computations->t2 = hit.pair.y;
+	computations->m_param1 = 0;
+	computations->m_param2 = 0;
+	computations->point = ray_position(ray, computations->t1);
 	computations->eye_v = multiply_on_scalar(&(ray->direction), -1);
-	computations->normal = normal_at(computations->object,
-									&(computations->point));
+	computations->normal = normal_at(computations->object, computations);
 	if (dot(&computations->normal, &computations->eye_v) < 0)
 	{
 		computations->inside = true;

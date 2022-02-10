@@ -56,6 +56,7 @@ t_pair	intersect_cy(void *this, void *ray)
 	t_cylinder	*cylinder;
 	t_vector	cylinder_to_ray;
 	t_ray 		*r;
+	t_pair		roots;
 	double		a;
 	double		b;
 	double		c;
@@ -69,5 +70,9 @@ t_pair	intersect_cy(void *this, void *ray)
 														dot(&cylinder_to_ray, &(cylinder->orientation));
 	c = dot(&cylinder_to_ray, &cylinder_to_ray) - ft_pow(dot(&cylinder_to_ray, &(cylinder->orientation)), 2)
 												-	ft_pow(cylinder->diameter/2, 2);
-	return (ft_quadratic_roots(a, b, c));
+
+	roots = ft_quadratic_roots(a, b, c);
+	if (closest_point_on_cylinder_axis(cylinder, ray, roots.x, roots.y) == MAX_DOUBLE)
+		roots.x = MAX_DOUBLE;
+	return (roots);
 }

@@ -133,10 +133,10 @@ struct	s_cylinder
 /*
  * NORMAL.C
  */
-t_vector	normal_at(t_object* this, void *point);
-t_vector	normal_at_sphere(void *this, void *point);
-t_vector	normal_at_plane(void *this, void *point);
-t_vector	normal_at_cylinder(void *this, void *point);
+t_vector	normal_at(t_object* this, void *computations);
+t_vector	normal_at_sphere(void *this, void *computations);
+t_vector	normal_at_plane(void *this, void *computations);
+t_vector	normal_at_cylinder(void *this, void *computations);
 
 /*
  * INTERSECTIONS.C

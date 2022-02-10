@@ -146,13 +146,22 @@ struct s_computations
 {
 	t_ray		*ray;
 	t_object	*object;
-	double		distance;
+	double		t1;
+	double		t2;
 	t_point		point;
 	t_point		over_point;
 	t_vector	eye_v;
 	t_vector 	normal;
 	bool		inside;
+	double 		m_param1;
+	double 		m_param2;
 };
+
+
+double closest_point_on_cylinder_axis(t_cylinder *cylinder,
+									  t_ray *ray,
+									  double t1,
+									  double t2);
 
 /*
  * VIEW.C
