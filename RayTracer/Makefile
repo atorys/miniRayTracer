@@ -23,6 +23,7 @@ VPATH			=	./srcs/				\
 #:::: FILES ::::::::::::::::::::::::::::::::::::::::::::::::::
 SRCS_NAME		=	main.c		\
 					init.c		\
+					view.c		\
 					exception.c
 
 GNL_SRCS		=	get_next_line.c			\
@@ -37,11 +38,11 @@ MATH_SRCS		=	collations.c			\
 					matrix.c
 
 RENDER_SRCS		=	new_image.c			\
-					view.c				\
 					ray.c				\
+					computations.c		\
+					color.c				\
 					normal.c			\
                     intersections.c		\
-					color.c				\
 					light.c
 
 PARSER_SRCS		=	converter_file.c	\

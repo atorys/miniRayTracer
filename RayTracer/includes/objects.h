@@ -146,4 +146,5 @@ t_pair		intersect_sp(void *this, void *ray);
 t_pair		intersect_pl(void *this, void *ray);
 t_pair		intersect_cy(void *this, void *ray);
 
+
 #endif

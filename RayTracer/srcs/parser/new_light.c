@@ -1,4 +1,5 @@
 #include "minirt.h"
+#include "render.h"
 
 int	new_node_l(t_light **l_light, t_light **new)
 {

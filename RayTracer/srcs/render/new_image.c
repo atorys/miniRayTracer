@@ -1,4 +1,10 @@
-#include "minirt.h"
+/****************************************************************************
+ *			Рендеринг сцены с учетом нового положения камеры				*
+ *			Создание нового холста, отрисовка сцены и вывод 				*
+ *			изображения в окно просмотра на экране							*
+ ****************************************************************************/
+
+#include "render.h"
 
 void	put_pixel(t_image *image, int x, int y, int color)
 {
@@ -8,83 +14,22 @@ void	put_pixel(t_image *image, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-t_hit	new_hit(t_scene *scene, t_ray *ray)
+t_ray	trace_ray(t_point *origin, int x, int y, t_view *view)
 {
-	t_hit		h;
-	t_object	*object;
-	double		min_distance;
+	t_ray 		ray;
+	t_point		position;
+	t_vector	direction;
 
-	object = scene->object;
-	min_distance = MAX_DOUBLE;
-	h.object = NULL;
-	while (object)
-	{
-		t_pair pair = intersect(object, ray);
-		if (pair.x < min_distance && pair.x != MAX_DOUBLE && pair.x >= 0) {
-			min_distance = pair.x;
-			h.object = object;
-			h.pair = pair;
-		}
-		object = object->next;
-	}
-	return (h);
+	position = new_tuple(x * view->x_change,
+						 y * view->y_change,
+						 origin->z - 1, POINT);
+	direction = subtract(&position, origin);
+	direction = multiply_matrix_tuple(view->transform, &direction);
+	direction = multiply_matrix_tuple(view->rotate, &direction);
+	normalize(&direction);
+	ray = new_ray(origin, &direction);
+	return (ray);
 }
-
-void	prepare_computations(t_comp *computations, t_scene *scene, t_ray *ray)
-{
-	t_hit	hit;
-
-	hit = new_hit(scene, ray);
-	if (!hit.object)
-	{
-		computations->object = NULL;
-		return ;
-	}
-	computations->ray = ray;
-	computations->object = hit.object;
-	computations->t1 = hit.pair.x;
-	computations->t2 = hit.pair.y;
-	computations->m_param1 = 0;
-	computations->m_param2 = 0;
-	computations->point = ray_position(ray, computations->t1);
-	computations->eye_v = multiply_on_scalar(&(ray->direction), -1);
-	computations->normal = normal_at(computations->object, computations);
-	if (dot(&computations->normal, &computations->eye_v) < 0)
-	{
-		computations->inside = true;
-		computations->normal = multiply_on_scalar(&(computations->normal), -1);
-	}
-	else
-		computations->inside = false;
-	computations->reflect_v = reflect(&(ray->direction), &(computations->normal));
-	normalize(&(computations->reflect_v));
-	computations->over_point = multiply_on_scalar(&(computations->normal), EPSILON);
-	computations->over_point = add(&(computations->point), &(computations->over_point));
-}
-
-t_color	new_color(t_scene *scene, t_ray *ray, int recursion_depth)
-{
-	t_comp	computations;
-	t_color	color;
-	t_color	reflected_color;
-	t_ray 	reflected_ray;
-
-	prepare_computations(&computations, scene, ray);
-	if (!computations.object)
-		return ((t_color){0, 0, 0, COLOR});
-	color = lightning(scene, &computations);
-	if (recursion_depth <= 0 || computations.object->reflective < 0)
-		return (color);
-
-	reflected_ray = new_ray(&(computations.over_point), &computations.reflect_v);
-
-	reflected_color = new_color(scene, &reflected_ray, recursion_depth - 1);
-	reflected_color = ft_color_multiplication(&reflected_color, computations.object->reflective);
-	color = ft_color_multiplication(&color, 1 - computations.object->reflective);
-
-	return (ft_color_addition(&color, &reflected_color));
-}
-
 
 void	put_scene_on_canvas(t_scene *scene)
 {

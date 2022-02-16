@@ -1,4 +1,5 @@
 #include "minirt.h"
+#include "render.h"
 
 void	new_ambient(t_ambient *ambient, const char *line)
 {

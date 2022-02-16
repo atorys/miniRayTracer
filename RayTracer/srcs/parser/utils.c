@@ -83,7 +83,7 @@ int	get_digit(const char *line, double *container, int *i, int n)
 	{
 		comma = ft_strchr(&(line[*i]), ' ');
 		if (comma == NULL)
-			comma = &(line[ft_strlen(line)]);
+			comma = (char *)&(line[ft_strlen(line)]);
 	}
 	digit = ft_substr(line, *i, ft_sigmlen(&(line[*i]), comma));
 	if (!digit || !check_digit(digit))

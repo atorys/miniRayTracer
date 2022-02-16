@@ -3,6 +3,7 @@
 //
 
 #include "minirt.h"
+#include "render.h"
 #include "stdlib.h"
 
 int	key_hook(int keycode, t_scene *scene)

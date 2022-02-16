@@ -2,7 +2,7 @@
 // Created by Achiote Tory on 1/22/22.
 //
 
-#include "minirt.h"
+#include "render.h"
 
 void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computations)
 {
