@@ -92,7 +92,7 @@ int		convert_file(const char *filename, t_scene *scene);
 
 int		get_object(const char *line, t_scene *scene);
 int		get_tuple(const char *line, t_tuple *tuple, int *i, double type);
-int		get_digit(const char *line, double *container, int *i, int n);
+int		get_digit(const char *line, double *container, int *i, char split_char);
 
 void	new_camera(t_camera *camera, const char *line);
 void	new_ambient(t_ambient *amb, const char *line);

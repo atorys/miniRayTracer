@@ -11,7 +11,7 @@ void	new_ambient(t_ambient *ambient, const char *line)
 	else
 		exception(REPEAT_VAL, "Ambient light", 1);
 
-	if (!get_digit(line, &(ambient->ratio), &i, 3) \
+	if (!get_digit(line, &(ambient->ratio), &i, ' ') \
 	|| ambient->ratio < 0 || ambient->ratio > 1)
 		exception(INVALID_PARAMETER, line, 1);
 

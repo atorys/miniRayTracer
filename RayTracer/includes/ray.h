@@ -9,8 +9,6 @@
 #include "matrix.h"
 
 typedef struct s_ray	t_ray;
-//typedef struct s_view	t_view;
-//typedef struct s_scene_attributes	t_scene;
 
 struct s_ray
 {

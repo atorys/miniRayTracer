@@ -67,7 +67,7 @@ int	check_digit(char *digit)
 	return (SUCCESS);
 }
 
-int	get_digit(const char *line, double *container, int *i, int n)
+int	get_digit(const char *line, double *container, int *i, char split_char)
 {
 	char	*digit;
 	char	*digit_tmp;
@@ -77,14 +77,9 @@ int	get_digit(const char *line, double *container, int *i, int n)
 	if (line[*i] == ',')
 		*i += 1;
 	ft_skip_whitespace(line, i);
-	if (n != 3)
-		comma = ft_strchr(&(line[*i]), ',');
-	else
-	{
-		comma = ft_strchr(&(line[*i]), ' ');
-		if (comma == NULL)
-			comma = (char *)&(line[ft_strlen(line)]);
-	}
+	comma = ft_strchr(&(line[*i]), split_char);
+	if (comma == NULL)
+		comma = (char *)&(line[ft_strlen(line)]);
 	digit = ft_substr(line, *i, ft_sigmlen(&(line[*i]), comma));
 	if (!digit || !check_digit(digit))
 		return (ERROR);
@@ -101,9 +96,9 @@ int	get_digit(const char *line, double *container, int *i, int n)
 
 int	get_tuple(const char *line, t_tuple *tuple, int *i, double type)
 {
-	if (!get_digit(line, &(tuple->x), i, 1) \
-	|| !get_digit(line, &(tuple->y), i, 2) \
-	|| !get_digit(line, &(tuple->z), i, 3))
+	if (!get_digit(line, &(tuple->x), i, ',') \
+	|| !get_digit(line, &(tuple->y), i, ',') \
+	|| !get_digit(line, &(tuple->z), i, ' '))
 		return (ERROR);
 	tuple->w = type;
 	if (type == COLOR && (tuple->x < 0 || tuple->x > 255 \

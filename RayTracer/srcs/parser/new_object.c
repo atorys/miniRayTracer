@@ -36,16 +36,16 @@ void	new_sphere(t_object **object, const char *line)
 	if (!get_tuple(line, &(new->object.center), &i, POINT))
 		exception(INVALID_VECTOR, line, 1);
 
-	if (!get_digit(line, &(new->diameter), &i, 3) || new->diameter < 0)
+	if (!get_digit(line, &(new->diameter), &i, ' ') || new->diameter < 0)
 		exception(INVALID_PARAMETER, line, 1);
 
 	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
-	if (!get_digit(line, &(new->object.reflective), &i, 3))
+	if (!get_digit(line, &(new->object.reflective), &i, ' '))
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_digit(line, &(new->object.specular), &i, 3))
+	if (!get_digit(line, &(new->object.specular), &i, ' '))
 		exception(INVALID_PARAMETER, line, 1);
 
 
@@ -73,16 +73,16 @@ void    new_plane(t_object **object, const char *line)
     || !get_tuple(line, &(new->orientation), &i, VECTOR))
 		exception(INVALID_VECTOR, line, 1);
 
-//	if (module_v(&new->orientation) != 1) // todo : each should be -1;1
-//		exception(INVALID_VECTOR, line, 1);
+	if (!ft_equal(module_v(&new->orientation), 1))
+		exception(INVALID_VECTOR, line, 1);
 
 	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
-	if (!get_digit(line, &(new->object.reflective), &i, 3))
+	if (!get_digit(line, &(new->object.reflective), &i, ' '))
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_digit(line, &(new->object.specular), &i, 3))
+	if (!get_digit(line, &(new->object.specular), &i, ' '))
 		exception(INVALID_PARAMETER, line, 1);
 
 	if (!ft_isempty(&(line[i])))
@@ -108,21 +108,21 @@ void	new_cylinder(t_object **object, const char *line)
 	|| !get_tuple(line, &(new->orientation), &i, VECTOR))
 		exception(INVALID_VECTOR, line, 1);
 
-	if (module_v(&new->orientation) != 1) // todo : each should be -1;1
+	if (!ft_equal(module_v(&new->orientation), 1))
 		exception(INVALID_VECTOR, line, 1);
 
-	if (!get_digit(line, &(new->diameter), &i, 3) || new->diameter < 0)
+	if (!get_digit(line, &(new->diameter), &i, ' ') || new->diameter < 0)
 		exception(INVALID_PARAMETER, line, 1);
-	if (!get_digit(line, &(new->height), &i, 3) || new->height < 0)
+	if (!get_digit(line, &(new->height), &i, ' ') || new->height < 0)
 		exception(INVALID_PARAMETER, line, 1);
 
 	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
-	if (!get_digit(line, &(new->object.reflective), &i, 3))
+	if (!get_digit(line, &(new->object.reflective), &i, ' '))
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_digit(line, &(new->object.specular), &i, 3))
+	if (!get_digit(line, &(new->object.specular), &i, ' '))
 		exception(INVALID_PARAMETER, line, 1);
 
 	if (!ft_isempty(&(line[i])))

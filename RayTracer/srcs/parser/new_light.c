@@ -34,7 +34,7 @@ void	new_light(t_light **l_light, const char *line)
 	if (!get_tuple(line, &(new->center), &i, POINT))
 		exception(INVALID_VECTOR, line, 1);
 
-	if (!get_digit(line, &(new->bright), &i, 3) \
+	if (!get_digit(line, &(new->bright), &i, ' ') \
 	|| new->bright < 0 || new->bright > 1)
 		exception(INVALID_PARAMETER, line, 1);
 
