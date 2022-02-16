@@ -10,8 +10,10 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computa
 	t_color diffuse;
 	t_color specular;
 	double	cosine;
+	double	distance;
 
 	light_ray = subtract(&(light->center), &(computations->point));
+	distance = pow(0.9, module_v(&light_ray));
 	normalize(&light_ray);
 
 	diffuse = new_tuple(0, 0, 0, COLOR);
@@ -20,14 +22,14 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computa
 	cosine = dot(&light_ray, &(computations->normal));
 	if (cosine >= 0)
 	{
-		diffuse = multiply_on_scalar(&(light->effective_color), cosine);
+		diffuse = multiply_on_scalar(&(light->effective_color), cosine * distance);
 		t_vector minus_light = multiply_on_scalar(&light_ray, -1);
 		t_vector reflected = reflect(&minus_light, &(computations->normal));
 		cosine = dot(&reflected, &(computations->eye_v));
 		if (cosine > 0)
 		{
 			double factor = ft_pow(cosine, (int)computations->object->specular);
-			specular = multiply_on_scalar(&(light->effective_color), factor * 0.8);
+			specular = multiply_on_scalar(&(light->effective_color), factor * distance);
 		}
 	}
 	*color = ft_color_addition(color, &diffuse);
@@ -36,7 +38,7 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computa
 
 void	apply_shadow(t_scene *scene, t_light *light, t_color *color, t_comp *computations)
 {
-	t_color shadow;
+	t_color 	shadow;
 
 	shadow = multiply_on_scalar(color, light->bright * -1 * 0.05);
 	*color = ft_color_addition(color, &shadow);
@@ -70,12 +72,10 @@ t_color	lightning(t_scene *scene, t_comp *computations)
 	color = ft_color_multiplication(&color, scene->ambient.ratio);
 	while (light_ptr)
 	{
-		if (!is_shadowed(scene, light_ptr, &(computations->over_point))) {
+		if (!is_shadowed(scene, light_ptr, &(computations->over_point)))
 			apply_light(scene, light_ptr, &color, computations);
-		}
-		else {
+		else
 			apply_shadow(scene, light_ptr, &color, computations);
-		}
 		light_ptr = light_ptr->next;
 	}
 	return (color);

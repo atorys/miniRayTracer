@@ -73,8 +73,8 @@ void    new_plane(t_object **object, const char *line)
     || !get_tuple(line, &(new->orientation), &i, VECTOR))
 		exception(INVALID_VECTOR, line, 1);
 
-	if (module_v(&new->orientation) != 1) // todo : each should be -1;1
-		exception(INVALID_VECTOR, line, 1);
+//	if (module_v(&new->orientation) != 1) // todo : each should be -1;1
+//		exception(INVALID_VECTOR, line, 1);
 
 	if (!get_tuple(line, &(new->object.color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);

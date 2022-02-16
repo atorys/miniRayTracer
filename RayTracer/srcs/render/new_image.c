@@ -56,6 +56,8 @@ void	prepare_computations(t_comp *computations, t_scene *scene, t_ray *ray)
 	}
 	else
 		computations->inside = false;
+	computations->reflect_v = reflect(&(ray->direction), &(computations->normal));
+	normalize(&(computations->reflect_v));
 	computations->over_point = multiply_on_scalar(&(computations->normal), EPSILON);
 	computations->over_point = add(&(computations->point), &(computations->over_point));
 }
@@ -64,6 +66,8 @@ t_color	new_color(t_scene *scene, t_ray *ray, int recursion_depth)
 {
 	t_comp	computations;
 	t_color	color;
+	t_color	reflected_color;
+	t_ray 	reflected_ray;
 
 	prepare_computations(&computations, scene, ray);
 	if (!computations.object)
@@ -72,11 +76,10 @@ t_color	new_color(t_scene *scene, t_ray *ray, int recursion_depth)
 	if (recursion_depth <= 0 || computations.object->reflective < 0)
 		return (color);
 
-	t_vector reflected = reflect(&(ray->direction), &(computations.normal));
-	normalize(&reflected);
-	t_ray reflected_ray = new_ray(&(computations.point), &reflected);
-	t_color reflected_color = new_color(scene, &reflected_ray, recursion_depth - 1);
-	reflected_color = ft_color_multiplication(&color, computations.object->reflective);
+	reflected_ray = new_ray(&(computations.over_point), &computations.reflect_v);
+
+	reflected_color = new_color(scene, &reflected_ray, recursion_depth - 1);
+	reflected_color = ft_color_multiplication(&reflected_color, computations.object->reflective);
 	color = ft_color_multiplication(&color, 1 - computations.object->reflective);
 
 	return (ft_color_addition(&color, &reflected_color));
@@ -103,7 +106,7 @@ void	put_scene_on_canvas(t_scene *scene)
 			put_pixel(&(scene->canvas), \
 					(int)ft_module(x + half_w), \
 					(int)ft_module(y - half_h), \
-					ft_convert_rgb_int(new_color(scene, &ray, 0)));
+					ft_convert_rgb_int(new_color(scene, &ray, 3)));
 		}
 	}
 }

@@ -13,16 +13,18 @@
 # include "objects.h"
 # include "ray.h"
 
-//# ifdef	LINUX
+//# if	LINUX
 #	include "../mlx/mlx_linux/mlx.h"
-//# elseif
+//# elif DARWIN
 //#	include "mlx.h"
 //# endif
 
 //# define WIN_HEIGHT	1080
 //# define WIN_WIDTH	1920
-# define WIN_HEIGHT	300
-# define WIN_WIDTH	300
+//# define WIN_HEIGHT	400
+//# define WIN_WIDTH	400
+# define WIN_HEIGHT	800
+# define WIN_WIDTH	800
 # define SUCCESS	1
 # define ERROR		0
 
@@ -151,10 +153,12 @@ struct s_computations
 	t_point		point;
 	t_point		over_point;
 	t_vector	eye_v;
+	t_vector	reflect_v;
 	t_vector 	normal;
 	bool		inside;
 	double 		m_param1;
 	double 		m_param2;
+	double 		fogging;
 };
 
 

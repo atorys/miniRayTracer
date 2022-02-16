@@ -89,6 +89,7 @@ else
 			LINK_MLX_FLAGS	= -Lmlx -lmlx -framework OpenGL -framework AppKit
 			MLX_PATH		= ./mlx/mlx_mac/
 			MLX_LIBRARY		= mlx/mlx_mac/libmlx.a
+			FLAGS			+= -D DARWIN=1
 endif
 
 FLAGS		= -Wall -Wextra -Werror
