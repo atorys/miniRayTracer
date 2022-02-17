@@ -19,10 +19,10 @@
 
 # include MLX_LIBRARY
 
-# define WIN_HEIGHT	1080
-# define WIN_WIDTH	1920
-//# define WIN_HEIGHT	400
-//# define WIN_WIDTH	400
+//# define WIN_HEIGHT	1080
+//# define WIN_WIDTH	1920
+# define WIN_HEIGHT	400
+# define WIN_WIDTH	400
 //# define WIN_HEIGHT	800
 //# define WIN_WIDTH	800
 # define SUCCESS	1
