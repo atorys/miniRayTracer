@@ -39,6 +39,7 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
 	t_vector true_up;
 	t_matrix *orientation;
 	t_matrix *translation;
+	t_matrix *transform;
 
 	if (forward->x == 0 && (forward->y == 1 || forward->y == -1) && forward->z == 0)
 	{
@@ -54,5 +55,10 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
 	translation = new_translation_matrix(-(from->x), -(from->y),-(from->z));
 	if (!orientation || !translation)
 		return (NULL);
-	return(multiply_matrix(orientation, translation));
+	transform = multiply_matrix(orientation, translation);
+	if (!transform) {
+		printf("transform error\n");
+		return (NULL);
+	}
+	return(transform);
 }

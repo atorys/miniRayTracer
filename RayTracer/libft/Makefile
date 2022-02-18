@@ -13,7 +13,8 @@ FILES =			ft_putnbr_fd.c		ft_split.c\
 				ft_strrchr.c		ft_memcmp.c\
 				ft_atod.c			ft_sigmlen.c\
 				ft_isdigit.c		ft_memset.c\
-				ft_calloc.c			ft_strtrim.c
+				ft_calloc.c			ft_strtrim.c\
+				ft_dtoa.c
 
 INCLUDES =		-I includes/
 FILES_DIR =		./srcs/

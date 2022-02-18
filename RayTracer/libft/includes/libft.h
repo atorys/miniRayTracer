@@ -51,5 +51,6 @@ void		ft_putnbr_fd(int n, int fd);
 
 int			ft_isempty(const char *str);
 int			ft_isdigit(int c);
+char		*ft_dtoa(double n, int precision);
 
 #endif

@@ -255,11 +255,7 @@ t_tuple	multiply_matrix_tuple(t_matrix *matrix, t_tuple* tuple)
 	double	array[4];
 	int 	i;
 
-//	if (matrix->size != 4)
-//		return (NULL);
 	result = new_tuple(0, 0, 0, 0);
-//	if (!result)
-//		return (NULL);
 	i = -1;
 	while (++i < matrix->size)
 	{
@@ -270,10 +266,6 @@ t_tuple	multiply_matrix_tuple(t_matrix *matrix, t_tuple* tuple)
 	result.y = array[1];
 	result.z = array[2];
 	result.w = array[3];
-//	result->x = array[0];
-//	result->y = array[1];
-//	result->z = array[2];
-//	result->w = array[3];
 	return (result);
 }
 

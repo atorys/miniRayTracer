@@ -18,16 +18,20 @@ t_ray	trace_ray(t_point *origin, int x, int y, t_view *view)
 {
 	t_ray 		ray;
 	t_point		position;
+	t_point		o;
 	t_vector	direction;
 
 	position = new_tuple(x * view->x_change,
 						 y * view->y_change,
 						 origin->z - 1, POINT);
+//	position = multiply_matrix_tuple(view->transform, &position);
+//	o = multiply_matrix_tuple(view->transform, origin);
 	direction = subtract(&position, origin);
 	direction = multiply_matrix_tuple(view->transform, &direction);
 	direction = multiply_matrix_tuple(view->rotate, &direction);
 	normalize(&direction);
 	ray = new_ray(origin, &direction);
+//	ray = transform(&ray, view->transform);
 	return (ray);
 }
 
@@ -56,6 +60,20 @@ void	put_scene_on_canvas(t_scene *scene)
 	}
 }
 
+void put_info_to_window(t_scene *scene)
+{
+	int color;
+
+	color = ft_convert_rgb_int((t_color) {255, 255, 255});
+	mlx_string_put(scene->mlx, scene->win, 20, 20, color, "Camera :");
+	mlx_string_put(scene->mlx, scene->win, 75, 20, color, ft_dtoa(scene->camera.center.x, 100));
+	mlx_string_put(scene->mlx, scene->win, 75, 35, color, ft_dtoa(scene->camera.center.y, 100));
+	mlx_string_put(scene->mlx, scene->win, 75, 50, color, ft_dtoa(scene->camera.center.z, 100));
+	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 30, color, "Zoom :");
+	mlx_string_put(scene->mlx, scene->win, 40, scene->height - 15, color, "mouse wheel / touchpad");
+//	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 30, color, "Rotation :");
+}
+
 int	new_image(t_scene *scene)
 {
 	scene->canvas.img = mlx_new_image(scene->mlx, scene->width, scene->height);
@@ -69,7 +87,7 @@ int	new_image(t_scene *scene)
 		return (ERROR);
 	put_scene_on_canvas(scene);
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->canvas.img, 0, 0);
-//	mlx_string_put(scene->mlx, scene->win, scene->width / 2 - 30, 40, 999999999, "minirt");
+	put_info_to_window(scene);
 	mlx_destroy_image(scene->mlx, scene->canvas.img);
 	return (SUCCESS);
 }
