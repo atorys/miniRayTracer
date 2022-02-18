@@ -1,3 +1,4 @@
+![](scenes/naturmort.png)
 # miniRayTracer
 Geometry scene render with miniLibX
 
@@ -8,4 +9,6 @@ Geometry scene render with miniLibX
 - [Habr : Основы освещения](https://habr.com/ru/post/333932/)
 - [Ray Tracing Tutorial by the Codermind team](https://sebastiandang.github.io/docs/cse168/RayTracing.pdf)
 - [Ray Tracing in One Weekend - by Peter Shirley](https://yeosong1.github.io/RT-OW#ray-tracing-in-one-weekend---by-peter-shirley)
-  
+
+---
+ ![](scenes/three_spheres.png)
