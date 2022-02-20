@@ -24,13 +24,13 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == 2 || keycode == 100) // D
 		scene->camera.center.x -= 0.2;
 	if (keycode == 123 || keycode == 65361) // left arrow
-		scene->view.rotation_y += 10;
+		scene->view.rotation_y += 30;
 	if (keycode == 124 || keycode == 65363) // right arrow
-		scene->view.rotation_y -= 10;
+		scene->view.rotation_y -= 30;
 	if (keycode == 126 || keycode == 65362) // up arrow
-		scene->view.rotation_x += 10;
+		scene->view.rotation_x += 30;
 	if (keycode == 125 || keycode == 65364) // down arrow
-		scene->view.rotation_x -= 10;
+		scene->view.rotation_x -= 30;
 //	if (keycode >= 123 && keycode <= 126)
 		scene->view.rotate = new_rotation_matrix(scene->view.rotation_x,
 												   scene->view.rotation_y,

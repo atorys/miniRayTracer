@@ -128,6 +128,7 @@ struct	s_cylinder
 	t_vector	orientation;
 	double		diameter;
 	double		height;
+	double 		squared_radius;
 };
 
 /*

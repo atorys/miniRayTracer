@@ -130,4 +130,5 @@ void	new_cylinder(t_object **object, const char *line)
 
 	new->object.intersection_func = intersect_cy;
 	new->object.normal_func = normal_at_cylinder;
+	new->squared_radius = (new->diameter / 2) * (new->diameter / 2);
 }

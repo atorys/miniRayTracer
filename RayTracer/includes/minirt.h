@@ -60,13 +60,6 @@ struct s_view
 
 	t_matrix*	transform;
 	t_matrix*	rotate;
-
-	t_vector 	up;
-	t_vector 	left;
-	t_vector 	right;
-	t_vector 	forward;
-
-	t_matrix *translation;
 };
 
 struct s_scene_attributes

@@ -56,9 +56,7 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
 	if (!orientation || !translation)
 		return (NULL);
 	transform = multiply_matrix(orientation, translation);
-	if (!transform) {
-		printf("transform error\n");
+	if (!transform)
 		return (NULL);
-	}
 	return(transform);
 }

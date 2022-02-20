@@ -63,12 +63,24 @@ void	put_scene_on_canvas(t_scene *scene)
 void put_info_to_window(t_scene *scene)
 {
 	int color;
+	t_vector	direction;
 
 	color = ft_convert_rgb_int((t_color) {255, 255, 255});
-	mlx_string_put(scene->mlx, scene->win, 20, 20, color, "Camera :");
-	mlx_string_put(scene->mlx, scene->win, 75, 20, color, ft_dtoa(scene->camera.center.x, 100));
-	mlx_string_put(scene->mlx, scene->win, 75, 35, color, ft_dtoa(scene->camera.center.y, 100));
-	mlx_string_put(scene->mlx, scene->win, 75, 50, color, ft_dtoa(scene->camera.center.z, 100));
+	direction = multiply_matrix_tuple(scene->view.rotate, &(scene->camera.orientation));
+	// todo : leaks dtoa??? just check
+	mlx_string_put(scene->mlx, scene->win, 20, 20, color, "Camera :  x      y      z ");
+	mlx_string_put(scene->mlx, scene->win, 20, 35, color, "center");
+	mlx_string_put(scene->mlx, scene->win, 20, 50, color, "dir");
+
+	mlx_string_put(scene->mlx, scene->win, 75, 35, color, ft_dtoa(scene->camera.center.x, 10));
+	mlx_string_put(scene->mlx, scene->win, 115, 35, color, ft_dtoa(scene->camera.center.y, 10));
+	mlx_string_put(scene->mlx, scene->win, 155, 35, color, ft_dtoa(scene->camera.center.z, 10));
+
+	mlx_string_put(scene->mlx, scene->win, 75, 50, color, ft_dtoa(direction.x, 1000));
+	mlx_string_put(scene->mlx, scene->win, 115, 50, color, ft_dtoa(direction.y, 1000));
+	mlx_string_put(scene->mlx, scene->win, 155, 50, color, ft_dtoa(direction.z, 1000));
+
+
 	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 30, color, "Zoom :");
 	mlx_string_put(scene->mlx, scene->win, 40, scene->height - 15, color, "mouse wheel / touchpad");
 //	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 30, color, "Rotation :");

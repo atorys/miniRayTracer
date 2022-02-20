@@ -4,25 +4,55 @@
 
 #include "../includes/libft.h"
 
+char	*calc_string(int integer, int mantissa)
+{
+	char 	*itoa;
+	char 	*result;
+	char 	*tmp;
+
+	result = ft_itoa(integer);
+	if (!result)
+		return (NULL);
+	tmp = result;
+	result = ft_strjoin(result, ".");
+	if (!result)
+		return (NULL);
+	free(tmp);
+	tmp = result;
+	itoa = ft_itoa(mantissa);
+	if (!itoa)
+		return (NULL);
+	result = ft_strjoin(result, itoa);
+	if (!result)
+		return (NULL);
+	free(tmp);
+	free(itoa);
+	return (result);
+}
+
 char	*ft_dtoa(double n, int precision)
 {
 	char	*str;
-	long	integer;
-	long	mantissa;
-	char 	*s1;
-	char 	*s2;
+	char 	*digit;
+	char 	*tmp;
 
-	integer = (int)n;
-	mantissa = (int)(n * precision) % precision;
-	if (mantissa < 0)
-		mantissa *= -1;
-	s1 = ft_itoa(integer);
-	s2 = ft_itoa(mantissa);
-	if (!s1 || !s2)
+	str = NULL;
+	if (n < 0)
+	{
+		str = ft_strdup("-");
+		if (!str)
+			return (NULL);
+		n *= -1;
+	}
+	tmp = str;
+	digit = calc_string((int)n,  (int)(n * precision) % precision);
+	if (!digit)
 		return (NULL);
-	s1 = ft_strjoin(s1, ".");
-	str = ft_strjoin(s1, s2);
+	str = ft_strjoin(str, digit);
 	if (!str)
 		return (NULL);
+	if (tmp)
+		free(tmp);
+	free(digit);
 	return (str);
 }

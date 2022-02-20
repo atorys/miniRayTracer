@@ -17,70 +17,65 @@ t_pair	intersect(t_object*	this, void *ray)
 
 t_pair	intersect_sp(void *this, void *ray)
 {
-	t_vector	sphere_to_ray;
+	t_vector	origin_to_center;
 	t_sphere	*sphere;
 	t_ray 		*r;
-	double		a;
-	double		b;
-	double		c;
 
 	sphere = (t_sphere *)this;
 	r = (t_ray *)ray;
-	sphere_to_ray = subtract(&(r->origin), &(sphere->object.center));
-	a = r->dot_direction;
-	b = 2 * dot(&(r->direction), &sphere_to_ray);
-	c = dot(&sphere_to_ray, &sphere_to_ray) - (sphere->squared_radius);
-	return (ft_quadratic_roots(a, b, c));
+	origin_to_center = subtract(&(r->origin), &(sphere->object.center));
+
+	return (ft_quadratic_roots(
+								r->dot_direction,
+								2 * dot(&(r->direction), &origin_to_center),
+								dot(&origin_to_center, &origin_to_center) - sphere->squared_radius));
 }
 
 t_pair	intersect_pl(void *this, void *ray)
 {
 	t_plane		*plane;
 	t_ray 		*r;
-	t_pair 		pair;
-	t_vector	plane_to_ray;
+	t_vector	origin_to_center;
 	double		a;
 	double		b;
 
 	plane = (t_plane *)this;
 	r = (t_ray *)ray;
 
-	pair.x = MAX_DOUBLE;
-	pair.y = MAX_DOUBLE;
-
-	plane_to_ray = subtract(&(r->origin), &(plane->object.center));
+	origin_to_center = subtract(&(r->origin), &(plane->object.center));
 	b = dot(&(plane->orientation), &(r->direction));
-	if (b < 0) {
+	if (b < 0)
+	{
 		plane->orientation = multiply_on_scalar(&(plane->orientation), -1);
 		b = dot(&(plane->orientation), &(r->direction));
 	}
-	a = dot(&(plane->orientation), &plane_to_ray);
+	a = dot(&(plane->orientation), &origin_to_center);
 	if (b != 0 && ((a > 0 && b < 0) || (a < 0 && b > 0)))
-		pair.x = -a / b;
-	return (pair);
+		return ((t_pair){-a/b, MAX_DOUBLE});
+	return ((t_pair){MAX_DOUBLE, MAX_DOUBLE});
 }
 
 t_pair	intersect_cy(void *this, void *ray)
 {
 	t_cylinder	*cylinder;
-	t_vector	cylinder_to_ray;
 	t_ray 		*r;
 	t_pair		roots;
-	double		a;
-	double		b;
-	double		c;
+	t_vector 	origin_to_center;
 
 	cylinder = (t_cylinder *)this;
 	r = (t_ray *)ray;
 
-	cylinder_to_ray = subtract(&(r->origin), &(cylinder->object.center));
-	a = r->dot_direction - ft_pow(dot(&(r->direction), &(cylinder->orientation)), 2);
-	b = 2 * (dot(&(r->direction), &cylinder_to_ray)) - dot(&(r->direction), &(cylinder->orientation)) *
-														dot(&cylinder_to_ray, &(cylinder->orientation));
-	c = dot(&cylinder_to_ray, &cylinder_to_ray) - ft_pow(dot(&cylinder_to_ray, &(cylinder->orientation)), 2)
-												-	ft_pow(cylinder->diameter/2, 2);
-
-	roots = ft_quadratic_roots(a, b, c);
+	origin_to_center = subtract(&(r->origin), &(cylinder->object.center));
+	roots = ft_quadratic_roots(
+								(r->dot_direction - ft_pow(dot(&(r->direction),&(cylinder->orientation)), 2)),
+								(2 *(dot(&(r->direction), &origin_to_center)
+										- dot(&(r->direction),	&(cylinder->orientation))
+										* dot(&origin_to_center, &(cylinder->orientation)))),
+								(dot(&origin_to_center, &origin_to_center)
+										- ft_pow(dot(&origin_to_center, &(cylinder->orientation)), 2)
+										- cylinder->squared_radius));
+	if (roots.x == MAX_DOUBLE)
+		return (roots);
 	if (closest_point_on_cylinder_axis(cylinder, ray, roots.x, roots.y) == MAX_DOUBLE)
 		roots.x = MAX_DOUBLE;
 	return (roots);
