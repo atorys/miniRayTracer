@@ -24,6 +24,11 @@ cd RayTracer/ && make
  :small_blue_diamond: Камран Амини : Книга «Экстремальный Cи. Параллелизм, ООП и продвинутые возможности»  
 
 ## Screenshots
+ 
+| Zooming | Rotation | Resizing objects |
+|:-----------------------------:|:----------------------------:|:----------------------------:|
+|![](scenes/images/zooming.gif) |![](scenes/images/zooming.gif)|![](scenes/images/zooming.gif)|
+
  ![](scenes/images/three_spheres.png)
 
 ###### Written with C, maths and :sparkling_heart:
