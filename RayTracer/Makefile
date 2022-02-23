@@ -24,6 +24,7 @@ VPATH			=	./srcs/				\
 SRCS_NAME		=	main.c		\
 					init.c		\
 					view.c		\
+					keys.c		\
 					exception.c
 
 GNL_SRCS		=	get_next_line.c			\
@@ -41,9 +42,11 @@ RENDER_SRCS		=	new_image.c			\
 					ray.c				\
 					computations.c		\
 					color.c				\
-					normal.c			\
-                    intersections.c		\
 					light.c
+
+OBJECTS_SRCS	=	intersections.c		\
+					normal.c			\
+					resize.c
 
 PARSER_SRCS		=	converter_file.c	\
 					new_camera.c		\
@@ -60,6 +63,7 @@ SRCS_PATH		=	./srcs/
 GNL_PATH		=	./srcs/get_nextline/
 MATH_PATH		=	./srcs/maths/
 RENDER_PATH		=	./srcs/render/
+OBJECTS_PATH	=	./srcs/render/objects/
 PARSER_PATH		=	./srcs/parser/
 OBJS_DIR		=	./objs/
 
@@ -68,13 +72,15 @@ OBJS_NAME		=	$(SRCS_NAME:.c=.o)	\
 					$(GNL_SRCS:.c=.o)	\
 					$(MATH_SRCS:.c=.o)	\
 					$(PARSER_SRCS:.c=.o)\
-					$(RENDER_SRCS:.c=.o)
+					$(RENDER_SRCS:.c=.o)\
+					$(OBJECTS_SRCS:.c=.o)
 
 SRCS			=	$(addprefix $(SRCS_PATH), $(SRCS_NAME)) 	\
 					$(addprefix $(GNL_PATH), $(GNL_SRCS))		\
 					$(addprefix $(MATH_PATH), $(MATH_SRCS))		\
 					$(addprefix $(PARSER_PATH), $(PARSER_SRCS))	\
-					$(addprefix $(RENDER_PATH), $(RENDER_SRCS))
+					$(addprefix $(RENDER_PATH), $(RENDER_SRCS)) \
+					$(addprefix $(OBJECTS_PATH), $(OBJECTS_SRCS))
 
 OBJS			=	$(addprefix $(OBJS_DIR), $(OBJS_NAME))
 

@@ -55,6 +55,7 @@ void	new_sphere(t_object **object, const char *line)
 	new->squared_radius = (new->diameter / 2) * (new->diameter / 2);
 	new->object.intersection_func = intersect_sp;
 	new->object.normal_func = normal_at_sphere;
+	new->object.resize_func = resize_sp;
 }
 
 void    new_plane(t_object **object, const char *line)
@@ -90,6 +91,7 @@ void    new_plane(t_object **object, const char *line)
 
 	new->object.intersection_func = intersect_pl;
 	new->object.normal_func = normal_at_plane;
+	new->object.resize_func = resize_pl;
 }
 
 void	new_cylinder(t_object **object, const char *line)
@@ -130,5 +132,6 @@ void	new_cylinder(t_object **object, const char *line)
 
 	new->object.intersection_func = intersect_cy;
 	new->object.normal_func = normal_at_cylinder;
+	new->object.resize_func = resize_cy;
 	new->squared_radius = (new->diameter / 2) * (new->diameter / 2);
 }

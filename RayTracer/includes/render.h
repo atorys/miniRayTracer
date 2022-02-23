@@ -8,6 +8,8 @@
 # include "ray.h"
 # include "minirt.h"
 
+# define COLOR_WHITE 16777215
+
 typedef struct s_hit			t_hit;
 typedef struct s_computations	t_comp;
 

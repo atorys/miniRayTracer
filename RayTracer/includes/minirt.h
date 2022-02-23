@@ -21,8 +21,8 @@
 
 //# define WIN_HEIGHT	1080
 //# define WIN_WIDTH	1920
-# define WIN_HEIGHT	400
-# define WIN_WIDTH	400
+# define WIN_HEIGHT	450
+# define WIN_WIDTH	450
 //# define WIN_HEIGHT	800
 //# define WIN_WIDTH	800
 # define SUCCESS	1
@@ -113,9 +113,41 @@ int			calculate_view_reference(t_scene *scene);
 t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up);
 
 /*
+ * KEYS.C
+ */
+int			key_hook(int keycode, t_scene *scene);
+int			mouse_hook(int button, int x, int y, t_scene *scene);
+
+# define KEY_ZOOM_IN	5
+# define KEY_ZOOM_OUT	4
+# define KEY_MOUSE_RIGHT 3
+# define KEY_MOUSE_LEFT 1
+
+//# ifdef	LINUX
+#	define KEY_ESC 65307
+#	define KEY_A 97
+#	define KEY_D 100
+#	define KEY_S 115
+#	define KEY_W 119
+#	define KEY_ARROW_LEFT	65361
+#	define KEY_ARROW_RIGHT	65363
+#	define KEY_ARROW_UP		65362
+#	define KEY_ARROW_DOWN	65364
+//# else
+//#	define KEY_ESC 53
+//#	define KEY_A 0
+//#	define KEY_D 2
+//#	define KEY_S 1
+//#	define KEY_W 13
+//#	define KEY_ARROW_LEFT	123
+//#	define KEY_ARROW_RIGHT	124
+//#	define KEY_ARROW_UP		126
+//#	define KEY_ARROW_DOWN	125
+//# endif
+/*
 * EXCEPTION.C
 */
-int		exception(const char *message, const char *error_line, int code);
+int			exception(const char *message, const char *error_line, int code);
 
 # define DEF_COLOR           "\033[1;31m"
 # define NO_COLOR            "\033[0m"

@@ -14,6 +14,59 @@ void	put_pixel(t_image *image, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+void	display_camera(t_scene *scene, double *data, int x, int y)
+{
+	int		i;
+	int		offset;
+	char	*string;
+
+	i = -1;
+	offset = 0;
+	while (++i < 6)
+	{
+		if (i == 3)
+		{
+			offset = 15;
+			x = 75;
+		}
+		string = ft_dtoa(data[i], 100);
+		if (!string)
+			exception(MALLOC, NULL, 1);
+		mlx_string_put(scene->mlx, scene->win, x, y + offset,
+					   COLOR_WHITE, string);
+		x += 40;
+		free(string);
+	}
+}
+
+void	put_info_to_window(t_scene *scene)
+{
+	t_vector	direction;
+	double 		data[6];
+
+	direction = multiply_matrix_tuple(scene->view.rotate, &(scene->camera.orientation));
+
+	mlx_string_put(scene->mlx, scene->win, 20, 20, COLOR_WHITE,
+				   "Camera :  x      y      z ");
+	mlx_string_put(scene->mlx, scene->win, 20, 35, COLOR_WHITE, "center");
+	mlx_string_put(scene->mlx, scene->win, 20, 50, COLOR_WHITE, "dir");
+	data[0] = scene->camera.center.x;
+	data[1] = scene->camera.center.y;
+	data[2] = scene->camera.center.z;
+	data[3] = direction.x;
+	data[4] = direction.y;
+	data[5] = direction.z;
+
+	display_camera(scene, data, 75, 35);
+
+	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 35,
+				   COLOR_WHITE, "Rotation :  arrows");
+	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 50,
+				   COLOR_WHITE, "Zoom :  mouse wheel");
+	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 20,
+				   COLOR_WHITE, "Resize objects :  mouse buttons");
+}
+
 t_ray	trace_ray(t_point *origin, int x, int y, t_view *view)
 {
 	t_ray 		ray;
@@ -58,32 +111,6 @@ void	put_scene_on_canvas(t_scene *scene)
 					ft_convert_rgb_int(new_color(scene, &ray, 3)));
 		}
 	}
-}
-
-void put_info_to_window(t_scene *scene)
-{
-	int color;
-	t_vector	direction;
-
-	color = ft_convert_rgb_int((t_color) {255, 255, 255});
-	direction = multiply_matrix_tuple(scene->view.rotate, &(scene->camera.orientation));
-	// todo : leaks dtoa??? just check
-	mlx_string_put(scene->mlx, scene->win, 20, 20, color, "Camera :  x      y      z ");
-	mlx_string_put(scene->mlx, scene->win, 20, 35, color, "center");
-	mlx_string_put(scene->mlx, scene->win, 20, 50, color, "dir");
-
-	mlx_string_put(scene->mlx, scene->win, 75, 35, color, ft_dtoa(scene->camera.center.x, 10));
-	mlx_string_put(scene->mlx, scene->win, 115, 35, color, ft_dtoa(scene->camera.center.y, 10));
-	mlx_string_put(scene->mlx, scene->win, 155, 35, color, ft_dtoa(scene->camera.center.z, 10));
-
-	mlx_string_put(scene->mlx, scene->win, 75, 50, color, ft_dtoa(direction.x, 1000));
-	mlx_string_put(scene->mlx, scene->win, 115, 50, color, ft_dtoa(direction.y, 1000));
-	mlx_string_put(scene->mlx, scene->win, 155, 50, color, ft_dtoa(direction.z, 1000));
-
-
-	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 30, color, "Zoom :");
-	mlx_string_put(scene->mlx, scene->win, 40, scene->height - 15, color, "mouse wheel / touchpad");
-//	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 30, color, "Rotation :");
 }
 
 int	new_image(t_scene *scene)

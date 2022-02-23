@@ -11,6 +11,7 @@ typedef struct s_object_base_interface	t_object;
 
 typedef t_pair (*t_intersection_func)(void *, void *);
 typedef t_vector (*t_normal_func)(void * , void *);
+typedef void (*t_resize_func)(void *, double);
 
 struct	s_object_base_interface
 {
@@ -22,6 +23,7 @@ struct	s_object_base_interface
 
 	t_intersection_func	intersection_func;
 	t_normal_func 		normal_func;
+	t_resize_func 		resize_func;
 
 	t_object 			*next;
 };
@@ -147,5 +149,12 @@ t_pair		intersect_sp(void *this, void *ray);
 t_pair		intersect_pl(void *this, void *ray);
 t_pair		intersect_cy(void *this, void *ray);
 
+/*
+ * RESIZE.C
+ */
+void		resize(t_object* this, double size);
+void		resize_sp(void* this, double size);
+void		resize_pl(void* this, double size);
+void		resize_cy(void* this, double size);
 
 #endif
