@@ -1,4 +1,4 @@
-![](scenes/naturmort.png)
+![](scenes/images/naturmort.png)
  
 # miniRayTracer  
 Geometry scene render with miniLibX :pencil2:
@@ -24,6 +24,6 @@ cd RayTracer/ && make
  :small_blue_diamond: Камран Амини : Книга «Экстремальный Cи. Параллелизм, ООП и продвинутые возможности»  
 
 ## Screenshots
- ![](scenes/three_spheres.png)
+ ![](scenes/images/three_spheres.png)
 
 ###### Written with C, maths and :sparkling_heart:

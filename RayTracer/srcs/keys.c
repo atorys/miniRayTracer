@@ -12,11 +12,11 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == KEY_ESC)
 		exit(0);
 	if (keycode == KEY_W) // W
-		scene->camera.center.y -= 0.2;
+		scene->camera.center.z -= 0.2;
 	if (keycode == KEY_A) // A
 		scene->camera.center.x += 0.2;
 	if (keycode == KEY_S) // S
-		scene->camera.center.y += 0.2;
+		scene->camera.center.z += 0.2;
 	if (keycode == KEY_D) // D
 		scene->camera.center.x -= 0.2;
 	if (keycode == KEY_ARROW_LEFT) // left arrow
