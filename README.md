@@ -23,11 +23,15 @@ cd RayTracer/ && make
  :small_blue_diamond: [Habr : Трёхмерная графика с нуля. Часть 1: трассировка лучей](https://habr.com/ru/post/342510/)  
  :small_blue_diamond: Камран Амини : Книга «Экстремальный Cи. Параллелизм, ООП и продвинутые возможности»  
 
-## Screenshots
+## Features
  
-| Zooming | Rotation | Resizing objects |
-|:-----------------------------:|:----------------------------:|:----------------------------:|
-|![](scenes/images/zooming.gif) |![](scenes/images/zooming.gif)|![](scenes/images/zooming.gif)|
+| Zooming | Resizing objects |
+|:-----------------------------:|:----------------------------:|
+|![](scenes/images/zooming.gif) |![](scenes/images/resizing_objects.gif)|
+
+ Multiple cameras | Rotation |
+|:-----------------------------:|:----------------------------:|
+|![](scenes/images/multiple_cameras.gif) |![](scenes/images/rotation.gif)|
 
  ![](scenes/images/three_spheres.png)
 
