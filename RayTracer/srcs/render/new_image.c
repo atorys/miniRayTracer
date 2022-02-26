@@ -79,22 +79,15 @@ void	put_info_to_window(t_scene *scene)
 t_ray	trace_ray(t_point *origin, int x, int y, t_view *view)
 {
 	t_ray 		ray;
-	t_point		position;
-	t_vector	direction;
+	t_vector	position;
 
 	position = new_tuple(x * view->x_change,
 						 y * view->y_change,
-						  origin->z - 1, POINT);
-//	position = multiply_matrix_tuple(view->transform, &position);
-//	position = multiply_matrix_tuple(view->rotate, &position);
-//	position.x += origin->x;
-//	position.y += origin->y;
-//	position.z += origin->z;
-	direction = subtract(&position, origin);
-	direction = multiply_matrix_tuple(view->transform, &direction);
-	direction = multiply_matrix_tuple(view->rotate, &direction);
-	normalize(&direction);
-	ray = new_ray(origin, &direction);
+						  - 1, VECTOR);
+	position = multiply_matrix_tuple(view->transform, &position);
+	position = multiply_matrix_tuple(view->rotate, &position);
+	normalize(&position);
+	ray = new_ray(origin, &position);
 	return (ray);
 }
 

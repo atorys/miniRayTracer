@@ -20,11 +20,11 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == KEY_W) // W
 		scene->camera.center.y += 0.2;
 	if (keycode == KEY_A) // A
-		scene->camera.center.x += 0.2;
+		scene->camera.center.x -= 0.2;
 	if (keycode == KEY_S) // S
 		scene->camera.center.y -= 0.2;
 	if (keycode == KEY_D) // D
-		scene->camera.center.x -= 0.2;
+		scene->camera.center.x += 0.2;
 	if (keycode == KEY_ARROW_LEFT) // left arrow
 		scene->view.rotation_y += 30;
 	if (keycode == KEY_ARROW_RIGHT) // right arrow

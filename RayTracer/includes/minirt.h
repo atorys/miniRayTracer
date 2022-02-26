@@ -146,6 +146,7 @@ int			mouse_hook(int button, int x, int y, t_scene *scene);
 //#	define KEY_ARROW_UP		126
 //#	define KEY_ARROW_DOWN	125
 //# endif
+
 /*
 * EXCEPTION.C
 */
