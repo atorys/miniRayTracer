@@ -6,7 +6,27 @@
 #include "render.h"
 #include "stdlib.h"
 
-void free_scene(t_scene *scene)
+void	free_camera_list(t_scene *scene)
+{
+	t_camera	*ptr_camera;
+	t_camera	*tmp;
+
+	ptr_camera = scene->cameras;
+	while (ptr_camera->number != 1)
+		ptr_camera = ptr_camera->next;
+	while (ptr_camera->number != scene->camera_count - 1
+	&& ptr_camera->number != scene->camera_count)
+	{
+		tmp = ptr_camera;
+		ptr_camera = ptr_camera->next;
+		free(tmp);
+		tmp = NULL;
+	}
+	free(ptr_camera);
+	ptr_camera = NULL;
+}
+
+void	free_scene(t_scene *scene)
 {
 	t_light		*ptr_light;
 	t_light		*tmp;
@@ -30,6 +50,9 @@ void free_scene(t_scene *scene)
 		free(tmp_object);
 		tmp_object = NULL;
 	}
+	free_camera_list(scene);
+	free_matrix(scene->view.rotate);
+	free_matrix(scene->view.transform);
 }
 
 int	main(int ac, char **av)
@@ -41,7 +64,7 @@ int	main(int ac, char **av)
 	init_scene(&scene);
 	if (!(convert_file(av[1], &scene)))
 		exception(NULL, NULL, 1);
-	if (!scene.camera.ident)
+	if (!scene.camera_count)
 		exception(NO_VAL, "Camera", 1);
 	if (!init_mlx(&scene))
 		exception(MLX, NULL, 1);

@@ -191,6 +191,8 @@ void		free_matrix(t_matrix *matrix)
 	int i;
 
 	i = -1;
+	if (!matrix)
+		return ;
 	while (++i < matrix->size)
 	{
 		free(matrix->a[i]);

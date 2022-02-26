@@ -11,12 +11,18 @@ int	key_hook(int keycode, t_scene *scene)
 //	printf("%d\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
+	if (keycode == 32 && scene->camera_count > 1) // SPACE
+	{
+		scene->cameras = scene->cameras->next;
+		if (!calculate_view_reference(scene))
+			exception(MALLOC, NULL, 1);
+	}
 	if (keycode == KEY_W) // W
-		scene->camera.center.z -= 0.2;
+		scene->camera.center.y += 0.2;
 	if (keycode == KEY_A) // A
 		scene->camera.center.x += 0.2;
 	if (keycode == KEY_S) // S
-		scene->camera.center.z += 0.2;
+		scene->camera.center.y -= 0.2;
 	if (keycode == KEY_D) // D
 		scene->camera.center.x -= 0.2;
 	if (keycode == KEY_ARROW_LEFT) // left arrow
@@ -28,25 +34,34 @@ int	key_hook(int keycode, t_scene *scene)
 	if (keycode == KEY_ARROW_DOWN) // down arrow
 		scene->view.rotation_x -= 30;
 //	if (keycode >= 123 && keycode <= 126)
+	free_matrix(scene->view.rotate);
 	scene->view.rotate = new_rotation_matrix(scene->view.rotation_x,
 											 scene->view.rotation_y,
 											 scene->view.rotation_z);
 	new_image(scene);
 }
 
+void move_camera(t_scene *scene, t_tuple translation, double speed)
+{
+	t_vector direction;
+
+	direction = scene->camera.orientation;
+	direction.x *= translation.x;
+	direction.y *= translation.y;
+	direction.z *= translation.z;
+	direction = multiply_on_scalar(&direction, speed);
+	scene->camera.center = add(&(scene->camera.center), &direction);
+}
+
 int	mouse_hook(int button, int x, int y, t_scene *scene)
 {
-	t_ray	ray;
-	t_hit	hit;
+	t_ray		ray;
+	t_hit		hit;
 
-	if (button == 7)
-		scene->camera.center.x -= 0.01;
-	if (button == 6)
-		scene->camera.center.x += 0.01;
 	if (button == KEY_ZOOM_IN)
-		scene->camera.center.z += 0.5;
+		move_camera(scene, (t_tuple){-1, -1, 1, POINT}, 0.5);
 	if (button == KEY_ZOOM_OUT)
-		scene->camera.center.z -= 0.5;
+		move_camera(scene, (t_tuple){-1, -1, 1, POINT}, -0.5);
 	if (button == KEY_MOUSE_LEFT || button == KEY_MOUSE_RIGHT)
 	{
 		ray = trace_ray(&(scene->camera.center),
@@ -60,7 +75,6 @@ int	mouse_hook(int button, int x, int y, t_scene *scene)
 				resize(hit.object, 0.5);
 			else
 				resize(hit.object, -0.5);
-			new_image(scene);
 		}
 	}
 //	printf("%d, %d, %d\n", button, x, y);

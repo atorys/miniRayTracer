@@ -17,7 +17,7 @@ int	get_object(const char *line, t_scene *scene)
 	ft_skip_whitespace(line, &i);
 	i_space = ft_next_whitespace(line, i);
 	if (!ft_strncmp(&(line[i]), "C", (int)ft_max(i_space - i, 1), 0))
-		new_camera(&(scene->camera), &(line[i_space]));
+		new_camera(&(scene->cameras), &(line[i_space]), &(scene->camera_count));
 	else if (!ft_strncmp(&(line[i]), "A", (int)ft_max(i_space - i, 1), 0))
 		new_ambient(&(scene->ambient), &(line[i_space]));
 	else if (!ft_strncmp(&(line[i]), "L", (int)ft_max(i_space - i, 1), 0))

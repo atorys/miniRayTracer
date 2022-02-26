@@ -69,9 +69,12 @@ struct	s_ambient
 struct	s_camera
 {
 	int			ident;
+	int 		number;
 	t_point		center;
 	t_vector	orientation;
 	double		view_degree;
+
+	t_camera 	*next;
 };
 
 /*

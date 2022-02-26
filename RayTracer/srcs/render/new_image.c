@@ -27,7 +27,7 @@ void	display_camera(t_scene *scene, double *data, int x, int y)
 		if (i == 3)
 		{
 			offset = 15;
-			x = 75;
+			x = 105;
 		}
 		string = ft_dtoa(data[i], 100);
 		if (!string)
@@ -37,6 +37,16 @@ void	display_camera(t_scene *scene, double *data, int x, int y)
 		x += 40;
 		free(string);
 	}
+	string = ft_itoa(scene->camera.number);
+	if (!string)
+		exception(MALLOC, NULL, 1);
+	mlx_string_put(scene->mlx, scene->win, 65, 20, COLOR_WHITE, string);
+	free(string);
+	string = ft_itoa(scene->camera_count);
+	if (!string)
+		exception(MALLOC, NULL, 1);
+	mlx_string_put(scene->mlx, scene->win, 85, 20, COLOR_WHITE, string);
+	free(string);
 }
 
 void	put_info_to_window(t_scene *scene)
@@ -45,9 +55,8 @@ void	put_info_to_window(t_scene *scene)
 	double 		data[6];
 
 	direction = multiply_matrix_tuple(scene->view.rotate, &(scene->camera.orientation));
-
 	mlx_string_put(scene->mlx, scene->win, 20, 20, COLOR_WHITE,
-				   "Camera :  x      y      z ");
+				   "Camera   /     x      y      z ");
 	mlx_string_put(scene->mlx, scene->win, 20, 35, COLOR_WHITE, "center");
 	mlx_string_put(scene->mlx, scene->win, 20, 50, COLOR_WHITE, "dir");
 	data[0] = scene->camera.center.x;
@@ -57,7 +66,7 @@ void	put_info_to_window(t_scene *scene)
 	data[4] = direction.y;
 	data[5] = direction.z;
 
-	display_camera(scene, data, 75, 35);
+	display_camera(scene, data, 105, 35);
 
 	mlx_string_put(scene->mlx, scene->win, 20, scene->height - 35,
 				   COLOR_WHITE, "Rotation :  arrows");
@@ -71,20 +80,21 @@ t_ray	trace_ray(t_point *origin, int x, int y, t_view *view)
 {
 	t_ray 		ray;
 	t_point		position;
-	t_point		o;
 	t_vector	direction;
 
 	position = new_tuple(x * view->x_change,
 						 y * view->y_change,
-						 origin->z - 1, POINT);
+						  origin->z - 1, POINT);
 //	position = multiply_matrix_tuple(view->transform, &position);
-//	o = multiply_matrix_tuple(view->transform, origin);
+//	position = multiply_matrix_tuple(view->rotate, &position);
+//	position.x += origin->x;
+//	position.y += origin->y;
+//	position.z += origin->z;
 	direction = subtract(&position, origin);
 	direction = multiply_matrix_tuple(view->transform, &direction);
 	direction = multiply_matrix_tuple(view->rotate, &direction);
 	normalize(&direction);
 	ray = new_ray(origin, &direction);
-//	ray = transform(&ray, view->transform);
 	return (ray);
 }
 
@@ -126,7 +136,8 @@ int	new_image(t_scene *scene)
 		return (ERROR);
 	put_scene_on_canvas(scene);
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->canvas.img, 0, 0);
-	put_info_to_window(scene);
+	if (scene->width > 400)
+		put_info_to_window(scene);
 	mlx_destroy_image(scene->mlx, scene->canvas.img);
 	return (SUCCESS);
 }

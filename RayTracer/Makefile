@@ -122,6 +122,10 @@ $(OBJS):		$(SRCS) $(HEADERS)
 				@mkdir	-p				$(OBJS_DIR)
 				@mv		$(OBJS_NAME)	$(OBJS_DIR)
 
+bonus:
+				FLAGS	+= -D BONUS=1
+				@make re
+
 clean:
 			@rm -rf obj/
 			@make clean -C $(MLX_PATH)

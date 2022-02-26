@@ -69,12 +69,14 @@ struct s_scene_attributes
 
 	int			width;
 	int			height;
-
 	t_image		canvas;
 	t_view		view;
 
+	t_camera 	camera;
+	int 		camera_count;
+
 	t_ambient	ambient;
-	t_camera	camera;
+	t_camera	*cameras;
 	t_light		*lights;
 	t_object 	*object;
 };
@@ -94,7 +96,7 @@ int		get_object(const char *line, t_scene *scene);
 int		get_tuple(const char *line, t_tuple *tuple, int *i, double type);
 int		get_digit(const char *line, double *container, int *i, char split_char);
 
-void	new_camera(t_camera *camera, const char *line);
+void	new_camera(t_camera **cameras, const char *line, int *camera_count);
 void	new_ambient(t_ambient *amb, const char *line);
 void	new_light(t_light **l_light, const char *line);
 void	new_sphere(t_object **object, const char *line);

@@ -13,15 +13,14 @@ int	init_scene(t_scene *scene)
 	scene->canvas.w = scene->width;
 	scene->canvas.h = scene->height;
 
-//	scene->view.camera_pos = NULL;
-//	scene->view.camera_up = NULL;
-//	scene->view.camera_right = NULL;
-//	scene->view.camera_dir = NULL;
-
-	scene->camera.ident = 0;
 	scene->ambient.ident = 0;
+	scene->camera_count = 0;
 	scene->lights = NULL;
+	scene->cameras = NULL;
 	scene->object = NULL;
+
+	scene->view.transform = NULL;
+	scene->view.rotate = NULL;
 	return (SUCCESS);
 }
 
