@@ -212,7 +212,7 @@ void		free_matrix(t_matrix *matrix)
 		matrix->a[i] = NULL;
 	}
 	free(matrix->a);
-	matrix = NULL;
+	matrix->a = NULL;
 	free(matrix);
 	matrix = NULL;
 }
