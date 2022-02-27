@@ -45,6 +45,7 @@ typedef struct s_camera		t_camera;
 typedef struct s_sphere		t_sphere;
 typedef struct s_plane		t_plane;
 typedef struct s_cylinder	t_cylinder;
+typedef struct s_cone		t_cone;
 
 /*
  * Ambient lightning:	A 0.2 255,255,255
@@ -132,6 +133,15 @@ struct	s_cylinder
 	double		diameter;
 	double		height;
 	double 		squared_radius;
+};
+
+struct	s_cone
+{
+	t_object 	object;
+	t_vector	orientation;
+	double 		angle;
+	double 		height;
+	double 		squared_tangent;
 };
 
 /*

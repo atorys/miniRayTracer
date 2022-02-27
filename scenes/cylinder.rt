@@ -1,5 +1,5 @@
 # camera    center      orientation     fov
-C           0,2,35      0,0,-1          60
+C           0,2,50      0,0,-1          60
 C           0,2,35      0,0,-1          120
 # ambient   ratio       color
 A           0.3         255,255,255

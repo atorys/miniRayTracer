@@ -33,6 +33,7 @@ cd RayTracer/ && make
 |:-----------------------------:|:----------------------------:|
 |![](scenes/images/multiple_cameras.gif) |![](scenes/images/rotation.gif)|
 
+ ![](scenes/images/cylinders_grid.png)
  ![](scenes/images/three_spheres.png)
 
 ###### Written with C, maths and :sparkling_heart:

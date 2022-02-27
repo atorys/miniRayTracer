@@ -21,8 +21,8 @@
 
 //# define WIN_HEIGHT	1080
 //# define WIN_WIDTH	1920
-# define WIN_HEIGHT	250
-# define WIN_WIDTH	450
+# define WIN_HEIGHT	450
+# define WIN_WIDTH	650
 //# define WIN_HEIGHT	800
 //# define WIN_WIDTH	800
 # define SUCCESS	1
