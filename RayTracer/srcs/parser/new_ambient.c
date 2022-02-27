@@ -1,21 +1,21 @@
 #include "minirt.h"
 #include "render.h"
 
-void	new_ambient(t_ambient *ambient, const char *line)
+void	new_ambient(t_ambient *new, const char *line)
 {
 	int	i;
 
 	i = 0;
-	if (!ambient->ident)
-		ambient->ident = A;
+	if (!new->ident)
+		new->ident = A;
 	else
 		exception(REPEAT_VAL, "Ambient light", 1);
 
-	if (!get_digit(line, &(ambient->ratio), &i, ' ') \
-	|| ambient->ratio < 0 || ambient->ratio > 1)
+	if (!get_digit(line, &(new->ratio), &i, ' ') \
+	|| new->ratio < 0 || new->ratio > 1)
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_tuple(line, &(ambient->color), &i, COLOR))
+	if (!get_tuple(line, &(new->effective_color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
 	if (!ft_isempty(&(line[i])))
@@ -24,6 +24,6 @@ void	new_ambient(t_ambient *ambient, const char *line)
 	/*
 	 * additional calculation for optimization
 	 */
-	ambient->effective_color = ft_color_multiplication(&(ambient->color),
-													   ambient->ratio);
+	new->effective_color = ft_color_multiplication(&(new->effective_color),
+													   new->ratio);
 }

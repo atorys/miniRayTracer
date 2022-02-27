@@ -30,9 +30,6 @@ struct s_computations
 	t_vector	eye_v;
 	t_vector	reflect_v;
 	t_vector 	normal;
-	bool		inside;
-	double 		m_param1;
-	double 		m_param2;
 };
 
 /*

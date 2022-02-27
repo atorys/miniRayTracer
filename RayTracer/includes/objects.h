@@ -55,8 +55,7 @@ typedef struct s_cylinder	t_cylinder;
 struct	s_ambient
 {
 	int		ident;
-	double	ratio; // не используется
-	t_color	color; // не используется
+	double	ratio;
 	t_color effective_color; // color * ratio
 };
 
@@ -87,9 +86,8 @@ struct	s_light
 {
 	int			ident;
 	t_point		center;
-	t_color		color; // не используется
-	double		bright;// не используется
 	t_color		effective_color; // color * brightness
+	double		bright;
 
 	t_light 	*next;
 };

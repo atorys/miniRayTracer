@@ -138,6 +138,19 @@ t_matrix*	new_rotation_matrix(double x_axis, double y_axis, double z_axis)
 	return (new);
 }
 
+/*
+ * matrix used for POINT and VECTOR orientation
+ * in new basis vectors
+ *
+ * 	L - new left vector
+ * 	U - true up vector
+ * 	D - new forward vector
+ *
+ *  |  Lx  Ly  Lz  0 |
+ *  |  Ux  Uy  Uz  0 |
+ *  | -Dx -Dy -Dz  0 |
+ *  |   0   0   0  1 |
+ */
 t_matrix*	new_orientation_matrix(t_vector *left, t_vector *up, t_vector *forward)
 {
 	t_matrix*	new;
@@ -204,6 +217,12 @@ void		free_matrix(t_matrix *matrix)
 	matrix = NULL;
 }
 
+/*
+ * returns TRUE if
+ * 	1) matrices' sizes are the same
+ * 	2) elements are equal
+ * otherwise returns FALSE
+ */
 bool		compare_matrix(t_matrix *matrix1, t_matrix *matrix2)
 {
 	int	i;

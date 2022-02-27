@@ -16,9 +16,6 @@
 
 int	calculate_view_reference(t_scene *scene)
 {
-	t_vector up;
-	t_vector forward;
-
 	scene->camera = *(scene->cameras);
 	scene->view.width = tan(scene->camera.view_degree / 2 * (PI / 180)) * 2;
 	scene->view.height = (double)scene->height / scene->width * scene->view.width;
@@ -27,27 +24,16 @@ int	calculate_view_reference(t_scene *scene)
 
 	scene->view.rotation_x = 0;
 	scene->view.rotation_y = 0;
-	scene->view.rotation_z = 0;
 
-	forward = scene->camera.orientation;
-	up = (t_vector){0, 1, 0, VECTOR};
-	if (forward.x == 0 && (forward.y == 1 || forward.y == -1) && forward.z == 0)
-	{
-		if (forward.y == 1)
-			up.z = -1;
-		else
-			up.z = 1;
-		up.y = 0;
-	}
 	free_matrix(scene->view.rotate);
 	scene->view.rotate = new_identity_matrix(4);
 	free_matrix(scene->view.transform);
 	scene->view.transform = transform_view(&(scene->camera.center),
-										  &(forward),
-										  up);
+										  &(scene->camera.orientation),
+										   (t_vector){0, 1, 0, VECTOR});
 	if (!scene->view.rotate || !scene->view.transform)
-		return (0);
-	return (1);
+		return (ERROR);
+	return (SUCCESS);
 }
 
 t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
@@ -58,14 +44,10 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
 	t_matrix *translation;
 	t_matrix *transform;
 
-	if (forward->x == 0 && (forward->y == 1 || forward->y == -1) && forward->z == 0)
-	{
-		if (forward->y == 1)
-			up.z = -1;
-		else
-			up.z = 1;
-		up.y = 0;
-	}
+	if (compare_tuples(forward, &(t_tuple){0, 1, 0, VECTOR}))
+		up = (t_vector){0, 0, -1, VECTOR};
+	else if (compare_tuples(forward, &(t_tuple){0, -1, 0, VECTOR}))
+		up = (t_vector){0, 0, 1, VECTOR};
 	left = cross(forward, &up);
 	true_up = cross(&left, forward);
 	orientation = new_orientation_matrix(&left, &true_up, forward);
@@ -75,6 +57,7 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
 	transform = multiply_matrix(translation, orientation);
 	if (!transform)
 		return (NULL);
+	free_matrix(orientation);
+	free_matrix(translation);
 	return (transform);
-//	return (orientation);
 }

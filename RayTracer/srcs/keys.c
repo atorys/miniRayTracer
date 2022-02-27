@@ -11,39 +11,39 @@ int	key_hook(int keycode, t_scene *scene)
 //	printf("%d\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
-	if (keycode == 32 && scene->camera_count > 1) // SPACE
+	else if (keycode == 32 && scene->camera_count > 1) // SPACE
 	{
 		scene->cameras = scene->cameras->next;
 		if (!calculate_view_reference(scene))
 			exception(MALLOC, NULL, 1);
 	}
-	if (keycode == KEY_W) // W
+	else if (keycode == KEY_W) // W
 		scene->camera.center.y += 0.2;
-	if (keycode == KEY_A) // A
+	else if (keycode == KEY_A) // A
 		scene->camera.center.x -= 0.2;
-	if (keycode == KEY_S) // S
+	else if (keycode == KEY_S) // S
 		scene->camera.center.y -= 0.2;
-	if (keycode == KEY_D) // D
+	else if (keycode == KEY_D) // D
 		scene->camera.center.x += 0.2;
-	if (keycode == KEY_ARROW_LEFT) // left arrow
+	else if (keycode == KEY_ARROW_LEFT) // left arrow
 		scene->view.rotation_y += 30;
-	if (keycode == KEY_ARROW_RIGHT) // right arrow
+	else if (keycode == KEY_ARROW_RIGHT) // right arrow
 		scene->view.rotation_y -= 30;
-	if (keycode == KEY_ARROW_UP) // up arrow
+	else if (keycode == KEY_ARROW_UP) // up arrow
 		scene->view.rotation_x += 30;
-	if (keycode == KEY_ARROW_DOWN) // down arrow
+	else if (keycode == KEY_ARROW_DOWN) // down arrow
 		scene->view.rotation_x -= 30;
 //	if (keycode >= 123 && keycode <= 126)
 	free_matrix(scene->view.rotate);
 	scene->view.rotate = new_rotation_matrix(scene->view.rotation_x,
 											 scene->view.rotation_y,
-											 scene->view.rotation_z);
+											 0);
 	new_image(scene);
 }
 
-void move_camera(t_scene *scene, t_tuple translation, double speed)
+static void	move_camera(t_scene *scene, t_tuple translation, double speed)
 {
-	t_vector direction;
+	t_vector	direction;
 
 	direction = scene->camera.orientation;
 	direction.x *= translation.x;
@@ -77,6 +77,5 @@ int	mouse_hook(int button, int x, int y, t_scene *scene)
 				resize(hit.object, -0.5);
 		}
 	}
-//	printf("%d, %d, %d\n", button, x, y);
 	new_image(scene);
 }

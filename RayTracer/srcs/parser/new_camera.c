@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-int	new_node_cam(t_camera **l_cameras, t_camera **new, int camera_count)
+static int	new_node(t_camera **l_cameras, t_camera **new, int camera_count)
 {
 	t_camera	*ptr;
 
@@ -33,7 +33,7 @@ void	new_camera(t_camera **cameras, const char *line, int *camera_count)
 //	else
 //		exception(REPEAT_VAL, "Camera", 1);
 	(*camera_count)++;
-	if (!new_node_cam(cameras, &new, *camera_count))
+	if (!new_node(cameras, &new, *camera_count))
 		exception(MALLOC, NULL, 1);
 
 	if (!get_tuple(line, &(new->center), &i, POINT) \

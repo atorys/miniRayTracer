@@ -49,7 +49,8 @@ double closest_point_on_cylinder_axis(t_cylinder *cylinder, t_ray *ray, double t
 	double m1;
 	double m2;
 
-	origin_to_center = subtract(&(ray->origin), &(cylinder->object.center));
+	origin_to_center = subtract(&(ray->origin),
+								&(cylinder->object.center));
 
 	m1 = dot(&(ray->direction), &(cylinder->orientation)) * t1;
 	m1 += dot(&origin_to_center, &(cylinder->orientation));
@@ -62,7 +63,8 @@ double closest_point_on_cylinder_axis(t_cylinder *cylinder, t_ray *ray, double t
 		if (m2 > -cylinder->height/2 && m2 < cylinder->height/2 && m1 > m2)
 			m1 = m2;
 	}
-	else if (m2 > -cylinder->height/2 && m2 < cylinder->height/2 && m1 < -cylinder->height/2)
+	else if (m2 > -cylinder->height/2 && m2 < cylinder->height/2
+	&& m1 < -cylinder->height/2)
 		m1 = m2;
 	else
 		m1 = MAX_DOUBLE;
@@ -75,15 +77,18 @@ t_vector	normal_at_cylinder(void *this, void *computations)
 	t_cylinder	*cylinder;
 	t_vector	normal;
 	t_point 	a;
+	double 		closest_distance;
 
 	cylinder = (t_cylinder *)this;
 	comp = (t_comp *)computations;
 
-	comp->m_param1 = closest_point_on_cylinder_axis(cylinder, comp->ray, comp->t1, comp->t2);
-	a = multiply_on_scalar(&(cylinder->orientation), comp->m_param1);
+	closest_distance = closest_point_on_cylinder_axis(cylinder, comp->ray,
+													comp->t1,
+													comp->t2);
+	a = multiply_on_scalar(&(cylinder->orientation), closest_distance);
 	a = add(&(cylinder->object.center), &a);
 
-	normal = subtract(&(comp->point), &normal);
+	normal = subtract(&(comp->point), &a);
 	normalize(&normal);
 	return (normal);
 }

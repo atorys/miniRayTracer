@@ -56,7 +56,6 @@ struct s_view
 
 	double 		rotation_x;
 	double 		rotation_y;
-	double 		rotation_z;
 
 	t_matrix*	transform;
 	t_matrix*	rotate;
@@ -125,7 +124,17 @@ int			mouse_hook(int button, int x, int y, t_scene *scene);
 # define KEY_MOUSE_RIGHT 3
 # define KEY_MOUSE_LEFT 1
 
-//# ifdef	LINUX
+# ifdef	DARWIN
+#	define KEY_ESC 53
+#	define KEY_A 0
+#	define KEY_D 2
+#	define KEY_S 1
+#	define KEY_W 13
+#	define KEY_ARROW_LEFT	123
+#	define KEY_ARROW_RIGHT	124
+#	define KEY_ARROW_UP		126
+#	define KEY_ARROW_DOWN	125
+# else
 #	define KEY_ESC 65307
 #	define KEY_A 97
 #	define KEY_D 100
@@ -135,17 +144,7 @@ int			mouse_hook(int button, int x, int y, t_scene *scene);
 #	define KEY_ARROW_RIGHT	65363
 #	define KEY_ARROW_UP		65362
 #	define KEY_ARROW_DOWN	65364
-//# else
-//#	define KEY_ESC 53
-//#	define KEY_A 0
-//#	define KEY_D 2
-//#	define KEY_S 1
-//#	define KEY_W 13
-//#	define KEY_ARROW_LEFT	123
-//#	define KEY_ARROW_RIGHT	124
-//#	define KEY_ARROW_UP		126
-//#	define KEY_ARROW_DOWN	125
-//# endif
+# endif
 
 /*
 * EXCEPTION.C

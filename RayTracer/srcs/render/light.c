@@ -1,16 +1,24 @@
+/****************************************************************************
+ *		Вычисление цвета пикселя :	смешение цветов и наложение				*
+ *									света / теней							*
+ ****************************************************************************/
 //
 // Created by Achiote Tory on 1/22/22.
 //
 
 #include "render.h"
 
-void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computations)
+/*
+ * Applying light color regarding !distance! between
+ * light point and colored point
+ */
+static void 	apply_light(t_light *light, t_color *color, t_comp *computations)
 {
-	t_vector light_ray;
-	t_color diffuse;
-	t_color specular;
-	double	cosine;
-	double	distance;
+	t_vector	light_ray;
+	t_color		diffuse;
+	t_color		specular;
+	double		cosine;
+	double		distance;
 
 	light_ray = subtract(&(light->center), &(computations->point));
 	distance = pow(0.9, module_v(&light_ray));
@@ -36,7 +44,7 @@ void apply_light(t_scene *scene, t_light *light, t_color *color, t_comp *computa
 	*color = ft_color_addition(color, &specular);
 }
 
-void	apply_shadow(t_scene *scene, t_light *light, t_color *color, t_comp *computations)
+static void	apply_shadow(t_light *light, t_color *color)
 {
 	t_color 	shadow;
 
@@ -44,7 +52,7 @@ void	apply_shadow(t_scene *scene, t_light *light, t_color *color, t_comp *comput
 	*color = ft_color_addition(color, &shadow);
 }
 
-bool	is_shadowed(t_scene *scene, t_light *light, t_point *point)
+static bool	is_shadowed(t_scene *scene, t_light *light, t_point *point)
 {
 	t_vector	light_vector;
 	double		distance;
@@ -61,6 +69,12 @@ bool	is_shadowed(t_scene *scene, t_light *light, t_point *point)
 	return (false);
 }
 
+/*
+ * Смешение цветов :
+ * 					1) добавление ambient цвета
+ * 					2) затемнение до общей освещенности сцены
+ * 					3) наложение цвета/света/теней для КАЖДОГО источника
+ */
 t_color	lightning(t_scene *scene, t_comp *computations)
 {
 	t_light	*light_ptr;
@@ -73,9 +87,9 @@ t_color	lightning(t_scene *scene, t_comp *computations)
 	while (light_ptr)
 	{
 		if (!is_shadowed(scene, light_ptr, &(computations->over_point)))
-			apply_light(scene, light_ptr, &color, computations);
+			apply_light(light_ptr, &color, computations);
 		else
-			apply_shadow(scene, light_ptr, &color, computations);
+			apply_shadow(light_ptr, &color);
 		light_ptr = light_ptr->next;
 	}
 	return (color);

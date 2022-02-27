@@ -1,7 +1,7 @@
 #include "minirt.h"
 #include "render.h"
 
-int	new_node_l(t_light **l_light, t_light **new)
+static int	new_node(t_light **l_light, t_light **new)
 {
 	t_light	*ptr;
 
@@ -28,7 +28,7 @@ void	new_light(t_light **l_light, const char *line)
 	t_light	*new;
 
 	i = 0;
-	if (!new_node_l(l_light, &new))
+	if (!new_node(l_light, &new))
 		exception(MALLOC, NULL, 1);
 
 	if (!get_tuple(line, &(new->center), &i, POINT))
@@ -38,7 +38,7 @@ void	new_light(t_light **l_light, const char *line)
 	|| new->bright < 0 || new->bright > 1)
 		exception(INVALID_PARAMETER, line, 1);
 
-	if (!get_tuple(line, &(new->color), &i, COLOR))
+	if (!get_tuple(line, &(new->effective_color), &i, COLOR))
 		exception(INVALID_COLOR, line, 1);
 
 	if (!ft_isempty(&(line[i])))
@@ -47,5 +47,6 @@ void	new_light(t_light **l_light, const char *line)
 	/*
 	 * additional calculation for optimization
 	 */
-	new->effective_color =  ft_color_multiplication(&(new->color), new->bright);
+	new->effective_color = ft_color_multiplication(&(new->effective_color),
+													new->bright);
 }

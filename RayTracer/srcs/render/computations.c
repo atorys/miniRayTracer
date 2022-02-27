@@ -40,18 +40,13 @@ void	prepare_computations(t_comp *computations, t_scene *scene, t_ray *ray)
 	computations->object = hit.object;
 	computations->t1 = hit.pair.x;
 	computations->t2 = hit.pair.y;
-	computations->m_param1 = 0;
-	computations->m_param2 = 0;
 	computations->point = ray_position(ray, computations->t1);
 	computations->eye_v = multiply_on_scalar(&(ray->direction), -1);
 	computations->normal = normal_at(computations->object, computations);
+
 	if (dot(&computations->normal, &computations->eye_v) < 0)
-	{
-		computations->inside = true;
 		computations->normal = multiply_on_scalar(&(computations->normal), -1);
-	}
-	else
-		computations->inside = false;
+
 	computations->reflect_v = reflect(&(ray->direction), &(computations->normal));
 	normalize(&(computations->reflect_v));
 	computations->over_point = multiply_on_scalar(&(computations->normal), EPSILON);
