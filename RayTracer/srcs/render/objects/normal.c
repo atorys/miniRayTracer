@@ -33,12 +33,16 @@ t_vector	normal_at_sphere(void *this, void *computations)
 
 t_vector	normal_at_plane(void *this, void *computations)
 {
-	t_plane *plane;
-	t_vector normal;
+	t_comp		*comp;
+	t_plane		*plane;
+	t_vector	normal;
 
 	plane = (t_plane *)this;
-	(void)computations;
-	normal = plane->orientation;
+	comp = (t_comp *)computations;
+	if (dot(&(plane->orientation), &(comp->eye_v)) < 0)
+		normal = multiply_on_scalar(&(plane->orientation), -1);
+	else
+		normal = plane->orientation;
 	normalize(&normal);
 	return (normal);
 }

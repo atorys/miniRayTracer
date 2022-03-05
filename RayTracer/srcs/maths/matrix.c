@@ -103,7 +103,30 @@ t_matrix*	new_scaling_matrix(double x, double y, double z)
 	return (new);
 }
 
-
+/*
+ * matrix used for POINT and VECTOR rotation
+ *
+ * 	1) rotation matrix for X axis:
+ *
+ *  | 1   0 	 0     0 |
+ *  | 0 cos(r) -sin(r) 0 |
+ *  | 0 sin(r) cos(r)  0 |
+ *  | 0   0      0     1 |
+ *
+ *  2) rotation matrix for Y axis:
+ *
+ *  | cos(r)  0 sin(r) 0 |
+ *  |   0     1   0    0 |
+ *  | -sin(r) 0 cos(r) 0 |
+ *  |   0     0   0    1 |
+ *
+ * 3)  for both XY axis:
+ *
+ *  | cos(r)    0     sin(r) 0 |
+ *  |   0     cos(r) -sin(r) 0 |
+ *  | -sin(r) sin(r)  cos(r) 0 |
+ *  |   0       0       0    1 |
+ */
 t_matrix*	new_rotation_matrix(double x_axis, double y_axis, double z_axis)
 {
 	t_matrix*	new;

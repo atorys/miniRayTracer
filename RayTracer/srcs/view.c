@@ -43,6 +43,7 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
 	t_matrix *orientation;
 	t_matrix *translation;
 	t_matrix *transform;
+	t_matrix *tmp;
 
 	if (compare_tuples(forward, &(t_tuple){0, 1, 0, VECTOR}))
 		up = (t_vector){0, 0, -1, VECTOR};
@@ -59,5 +60,12 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up)
 		return (NULL);
 	free_matrix(orientation);
 	free_matrix(translation);
+
+	tmp = transform;
+	transform = inverse(transform);
+	if (!transform)
+		return (NULL);
+	free_matrix(tmp);
+
 	return (transform);
 }

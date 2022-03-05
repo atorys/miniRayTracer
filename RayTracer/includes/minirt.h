@@ -119,31 +119,34 @@ t_matrix	*transform_view(t_point *from, t_vector *forward, t_vector up);
 int			key_hook(int keycode, t_scene *scene);
 int			mouse_hook(int button, int x, int y, t_scene *scene);
 
-# define KEY_ZOOM_IN	5
-# define KEY_ZOOM_OUT	4
-# define KEY_MOUSE_RIGHT 3
+# define KEY_ZOOM_IN	4
+# define KEY_ZOOM_OUT	5
 # define KEY_MOUSE_LEFT 1
 
 # ifdef	DARWIN
-#	define KEY_ESC 53
-#	define KEY_A 0
-#	define KEY_D 2
-#	define KEY_S 1
-#	define KEY_W 13
-#	define KEY_ARROW_LEFT	123
-#	define KEY_ARROW_RIGHT	124
-#	define KEY_ARROW_UP		126
-#	define KEY_ARROW_DOWN	125
+#  define KEY_ESC 53
+#  define KEY_SPACE 49
+#  define KEY_MOUSE_RIGHT 2
+#  define KEY_A 0
+#  define KEY_D 2
+#  define KEY_S 1
+#  define KEY_W 13
+#  define KEY_ARROW_LEFT	123
+#  define KEY_ARROW_RIGHT	124
+#  define KEY_ARROW_UP		126
+#  define KEY_ARROW_DOWN	125
 # else
-#	define KEY_ESC 65307
-#	define KEY_A 97
-#	define KEY_D 100
-#	define KEY_S 115
-#	define KEY_W 119
-#	define KEY_ARROW_LEFT	65361
-#	define KEY_ARROW_RIGHT	65363
-#	define KEY_ARROW_UP		65362
-#	define KEY_ARROW_DOWN	65364
+#  define KEY_ESC 65307
+#  define KEY_SPACE 32
+#  define KEY_MOUSE_RIGHT 3
+#  define KEY_A 97
+#  define KEY_D 100
+#  define KEY_S 115
+#  define KEY_W 119
+#  define KEY_ARROW_LEFT	65361
+#  define KEY_ARROW_RIGHT	65363
+#  define KEY_ARROW_UP		65362
+#  define KEY_ARROW_DOWN	65364
 # endif
 
 /*

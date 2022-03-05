@@ -36,6 +36,7 @@ struct s_computations
  * NEW_IMAGE.C
  */
 int			new_image(t_scene *scene);
+void		put_info_to_window(t_scene *scene);
 t_ray		trace_ray(t_point *origin, int x, int y, t_view *view);
 t_color		lightning(t_scene *scene, t_comp *computations);
 

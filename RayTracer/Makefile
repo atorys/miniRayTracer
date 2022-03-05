@@ -39,6 +39,7 @@ MATH_SRCS		=	collations.c			\
 					matrix.c
 
 RENDER_SRCS		=	new_image.c			\
+					info.c				\
 					ray.c				\
 					computations.c		\
 					color.c				\
@@ -84,6 +85,8 @@ SRCS			=	$(addprefix $(SRCS_PATH), $(SRCS_NAME)) 	\
 
 OBJS			=	$(addprefix $(OBJS_DIR), $(OBJS_NAME))
 
+FLAGS	= -Wall -Wextra -Werror
+
 OS_NAME	= $(shell uname -s | tr A-Z a-z)
 ifeq	($(OS_NAME), linux)
 			OBJ_MLX_FLAGS	= -I/usr/include -Imlx_linux -O3 -lXext -lX11
@@ -99,9 +102,6 @@ else
 			FLAGS			+= -D DARWIN=1
 endif
 
-FLAGS		= -Wall -Wextra -Werror
-
-
 #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 .PHONY:		all clean fclean re
 #			::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -115,16 +115,12 @@ all: 			$(NAME)
 $(NAME):		$(OBJS)
 				@$(MAKE)	-C			$(LIBFT_PATH)
 				@$(MAKE)	-C			$(MLX_PATH)
-				@$(CC)	$(OBJS)	$(LIBRARY) $(MLX_LIBRARY) $(LINK_MLX_FLAGS) -o $(NAME)
+				@$(CC)  $(FLAGS) $(OBJS)	$(LIBRARY) $(MLX_LIBRARY) $(LINK_MLX_FLAGS) -o $(NAME)
 
 $(OBJS):		$(SRCS) $(HEADERS)
-				@gcc -g	$(INCLUDES)	-c	$(SRCS) $(OBJ_MLX_FLAGS)
+				@gcc $(FLAGS) $(INCLUDES)	-c	$(SRCS) $(OBJ_MLX_FLAGS)
 				@mkdir	-p				$(OBJS_DIR)
 				@mv		$(OBJS_NAME)	$(OBJS_DIR)
-
-bonus:
-				FLAGS	+= -D BONUS=1
-				@make re
 
 clean:
 			@rm -rf obj/

@@ -28,10 +28,6 @@ void	new_camera(t_camera **cameras, const char *line, int *camera_count)
 	int			i;
 
 	i = 0;
-//	if (!new->ident)
-//		cameras->ident = C;
-//	else
-//		exception(REPEAT_VAL, "Camera", 1);
 	(*camera_count)++;
 	if (!new_node(cameras, &new, *camera_count))
 		exception(MALLOC, NULL, 1);

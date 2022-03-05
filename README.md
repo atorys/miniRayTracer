@@ -1,4 +1,4 @@
-![](scenes/images/naturmort.png)
+![](scenes/images/spheres_in_cube.png)
  
 # miniRayTracer  
 Geometry scene render with miniLibX :pencil2:
@@ -33,7 +33,8 @@ cd RayTracer/ && make
 |:-----------------------------:|:----------------------------:|
 |![](scenes/images/multiple_cameras.gif) |![](scenes/images/rotation.gif)|
 
- ![](scenes/images/cylinders_grid.png)
+ ![](scenes/images/cylinders.png)
  ![](scenes/images/three_spheres.png)
+ ![.rt file by @BillyKlebitz](scenes/images/jupiter.png)
 
-###### Written with C, maths and :sparkling_heart:
+###### Written with C, math and :sparkling_heart:
