@@ -4,9 +4,9 @@
 Geometry scene render with miniLibX :pencil2:
 
 Requirements :  
- :small_orange_diamond: MacOS or Linux   
- :small_orange_diamond: GNU make  
- :small_orange_diamond: gcc
+ ✘  MacOS or Linux   
+ ✘  GNU make  
+ ✘  gcc
 
 
 ## How to run
@@ -19,9 +19,9 @@ cd RayTracer/ && make
 ./miniRT  [scene.rt]
 ```
 ## Useful links
- :small_blue_diamond: [Jamis Buck : The Ray Tracer Challenge](https://pragprog.com/titles/jbtracer/the-ray-tracer-challenge/)  
- :small_blue_diamond: [Habr : Трёхмерная графика с нуля. Часть 1: трассировка лучей](https://habr.com/ru/post/342510/)  
- :small_blue_diamond: Камран Амини : Книга «Экстремальный Cи. Параллелизм, ООП и продвинутые возможности»  
+ ✦ [Jamis Buck : The Ray Tracer Challenge](https://pragprog.com/titles/jbtracer/the-ray-tracer-challenge/)  
+ ✦ [Habr : Трёхмерная графика с нуля. Часть 1: трассировка лучей](https://habr.com/ru/post/342510/)  
+ ✦ Камран Амини : Книга «Экстремальный Cи. Параллелизм, ООП и продвинутые возможности»  
 
 ## Features
  
